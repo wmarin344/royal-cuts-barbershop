@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestionar Cita · Royal Cuts</title>
+    
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/indexStyle.css">
+    <link rel="stylesheet" href="css/gestionStyle.css">
+    
+</head>
+<body>
+
+    <!-- ===== CONTENEDOR PRINCIPAL ===== -->
+    <div class="gestion-container" id="gestionContainer">
+        
+        <h1 class="gestion-titulo-interno">Gestion de citas</h1>
+
+        <img src="assets/logo.jpeg" alt="Royal Cuts" class="gestion-logo">
+        
+        <h1 class="gestion-titulo">Royal Cuts Barbershop</h1>
+        
+        <div class="gestion-separador"></div>
+        
+        <p class="gestion-subtitulo" id="gestionSubtitulo">Por favor ingresa el ID de tu cita</p>
+        
+        <div class="mensaje mensaje-exito" id="mensajeExito">
+            <span id="mensajeExitoTexto">Operacion realizada con exito</span>
+        </div>
+        <div class="mensaje mensaje-error" id="mensajeError">
+            <span id="mensajeErrorTexto">Hubo un error</span>
+        </div>
+        <div class="mensaje mensaje-info" id="mensajeInfo">
+            <span id="mensajeInfoTexto">Cargando...</span>
+        </div>
+        
+        <div class="spinner" id="spinner"></div>
+        
+        <div id="inputContainer">
+            <div class="input-id-container">
+                <input type="text" id="inputCitaId" placeholder="Ej: CIT-2026-08-20-ABC123" />
+                <button class="btn-buscar" id="btnBuscar">Buscar cita</button>
+            </div>
+        </div>
+        
+        <div id="detallesCita" style="display:none;">
+            <div class="gestion-detalles">
+                <div class="gestion-detalle-item">
+                    <span class="gestion-label">Servicio</span>
+                    <span class="gestion-valor" id="detalleServicio">—</span>
+                </div>
+                <div class="gestion-detalle-item">
+                    <span class="gestion-label">Barbero</span>
+                    <span class="gestion-valor" id="detalleBarbero">—</span>
+                </div>
+                <div class="gestion-detalle-item">
+                    <span class="gestion-label">Fecha y Hora</span>
+                    <span class="gestion-valor" id="detalleFechaHora">—</span>
+                </div>
+                <div class="gestion-detalle-item">
+                    <span class="gestion-label">Cliente</span>
+                    <span class="gestion-valor" id="detalleCliente">—</span>
+                </div>
+                <div class="gestion-detalle-item">
+                    <span class="gestion-label">Email</span>
+                    <span class="gestion-valor" id="detalleEmail">—</span>
+                </div>
+                <div class="gestion-detalle-item">
+                    <span class="gestion-label">Telefono</span>
+                    <span class="gestion-valor" id="detalleTelefono">—</span>
+                </div>
+            </div>
+            <p class="cita-id">ID: <strong id="detalleCitaId">—</strong></p>
+        </div>
+        
+        <div class="btn-group" id="btnGroup" style="display:none;">
+            <button class="btn-gestion btn-cancelar" id="btnCancelar">
+                Cancelar cita
+            </button>
+            <button class="btn-gestion btn-reagendar" id="btnReagendar">
+                Reagendar cita
+            </button>
+        </div>
+        
+        <div style="margin-top: 14px;">
+            <a href="index.html" class="btn-gestion btn-volver">Ir a la pagina web</a>
+        </div>
+    </div>
+
+    <!-- ======================================== 
+    MODAL PERSONALIZADO
+    ======================================== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <h2 class="modal-titulo" id="modalTitulo">Confirmar accion</h2>
+            <p class="modal-mensaje" id="modalMensaje">¿Estas seguro de que quieres cancelar esta cita?</p>
+            <div class="modal-botones" id="modalBotones">
+                <!-- Los botones se generan dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="module">
+        // ==========================================
+        // CONFIGURACION DE FIREBASE
+        // ==========================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCrWsY8nz1MjndaBsLAWFbNlLMttuN6HAM",
+            authDomain: "royalcutscalendario.firebaseapp.com",
+            projectId: "royalcutscalendario",
+            storageBucket: "royalcutscalendario.firebasestorage.app",
+            messagingSenderId: "174922243718",
+            appId: "1:174922243718:web:66bb28577e20080a047b07"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ==========================================
+        // FUNCIONES DE LIMPIEZA
+        // ==========================================
+        function limpiarTexto(texto) {
+            if (!texto) return 'No especificado';
+            texto = String(texto);
+            texto = texto.replace(/<[^>]*>/g, '');
+            texto = texto.replace(/["']/g, '');
+            texto = texto.replace(/[&<>]/g, '');
+            texto = texto.replace(/[\n\r]+/g, ' ');
+            texto = texto.replace(/\s+/g, ' ');
+            texto = texto.substring(0, 200);
+            return texto.trim();
+        }
+
+        function limpiarCitaId(id) {
+            if (!id) return 'No especificado';
+            return String(id).replace(/-/g, ' ');
+        }
+
+        // ==========================================
+        // EMAILJS - INICIALIZAR
+        // ==========================================
+        emailjs.init("Bd9sr1iXw9L45vOWM");
+
+        // ==========================================
+        // ENVIAR NOTIFICACION CON EMAILJS
+        // ==========================================
+        async function enviarNotificacionEmailJS(tipo, datos) {
+            try {
+                const serviceID = "service_p8cm46v";
+                const templateID = "template_dseqyuj";
+                
+                let titulo = '';
+                let mensaje = '';
+                let mensajeInfo = '';
+                
+                if (tipo === 'cancelada') {
+                    titulo = 'Cita cancelada';
+                    mensaje = 'El cliente ha cancelado su cita.';
+                    mensajeInfo = 'La hora ya esta disponible para otro cliente.';
+                } else if (tipo === 'reagendada') {
+                    titulo = 'Cita reagendada';
+                    mensaje = 'El cliente ha reagendado su cita.';
+                    mensajeInfo = 'El cliente esta eligiendo una nueva fecha y hora.';
+                } else {
+                    titulo = 'Nueva cita registrada';
+                    mensaje = 'Nueva cita registrada en el sistema.';
+                    mensajeInfo = 'Prepare la silla y los utensilios para la llegada del cliente.';
+                }
+                
+                const params = {
+                    titulo: titulo,
+                    mensaje: mensaje,
+                    mensajeInfo: mensajeInfo,
+                    cliente_nombre: limpiarTexto(datos.cliente || 'No especificado'),
+                    cliente_telefono: limpiarTexto(datos.telefono || 'No especificado'),
+                    cliente_email: limpiarTexto(datos.email || 'No especificado'),
+                    cliente_notas: limpiarTexto(datos.notas || 'Sin notas adicionales'),
+                    servicio_nombre: limpiarTexto(datos.servicio || 'No especificado'),
+                    servicio_duracion: limpiarTexto(datos.duracion || 'No especificado'),
+                    servicio_precio: limpiarTexto(datos.precio || 'No especificado'),
+                    barbero_nombre: limpiarTexto(datos.barbero || 'No especificado'),
+                    cita_fecha_hora: limpiarTexto(datos.fechaHora || '—'),
+                    cita_id: datos.citaId || '—'
+                };
+
+                const response = await emailjs.send(serviceID, templateID, params);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // ==========================================
+        // REFERENCIAS DOM
+        // ==========================================
+        const inputContainer = document.getElementById('inputContainer');
+        const inputCitaId = document.getElementById('inputCitaId');
+        const btnBuscar = document.getElementById('btnBuscar');
+        const spinner = document.getElementById('spinner');
+        const mensajeExito = document.getElementById('mensajeExito');
+        const mensajeError = document.getElementById('mensajeError');
+        const mensajeInfo = document.getElementById('mensajeInfo');
+        const mensajeExitoTexto = document.getElementById('mensajeExitoTexto');
+        const mensajeErrorTexto = document.getElementById('mensajeErrorTexto');
+        const mensajeInfoTexto = document.getElementById('mensajeInfoTexto');
+        const detallesCita = document.getElementById('detallesCita');
+        const btnGroup = document.getElementById('btnGroup');
+        const btnCancelar = document.getElementById('btnCancelar');
+        const btnReagendar = document.getElementById('btnReagendar');
+        const gestionSubtitulo = document.getElementById('gestionSubtitulo');
+
+        // Modal
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitulo = document.getElementById('modalTitulo');
+        const modalMensaje = document.getElementById('modalMensaje');
+        const modalBotones = document.getElementById('modalBotones');
+
+        let citaData = null;
+        let citaDocId = null;
+
+        // ==========================================
+        // FUNCIONES DEL MODAL
+        // ==========================================
+        function mostrarModal(opciones) {
+            modalTitulo.textContent = opciones.titulo || 'Atencion';
+            modalMensaje.innerHTML = opciones.mensaje || '';
+            
+            modalBotones.innerHTML = '';
+            
+            if (opciones.botones && opciones.botones.length > 0) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'modal-botones-row';
+                
+                opciones.botones.forEach((btn) => {
+                    const button = document.createElement('button');
+                    button.className = `btn-modal ${btn.clase || 'btn-modal-primario'}`;
+                    button.textContent = btn.texto || 'Aceptar';
+                    
+                    if (btn.accion) {
+                        button.addEventListener('click', function() {
+                            cerrarModal();
+                            btn.accion();
+                        });
+                    } else {
+                        button.addEventListener('click', cerrarModal);
+                    }
+                    
+                    wrapper.appendChild(button);
+                });
+                
+                modalBotones.appendChild(wrapper);
+            }
+            
+            modalOverlay.classList.add('activo');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarModal() {
+            modalOverlay.classList.remove('activo');
+            document.body.style.overflow = '';
+        }
+
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                cerrarModal();
+            }
+        });
+
+        // ==========================================
+        // FUNCIONES DE UI
+        // ==========================================
+        function mostrarExito(texto) {
+            mensajeExito.style.display = 'block';
+            mensajeExitoTexto.textContent = texto;
+            mensajeError.style.display = 'none';
+            mensajeInfo.style.display = 'none';
+        }
+
+        function mostrarError(texto) {
+            mensajeError.style.display = 'block';
+            mensajeErrorTexto.textContent = texto;
+            mensajeExito.style.display = 'none';
+            mensajeInfo.style.display = 'none';
+        }
+
+        function mostrarInfo(texto) {
+            mensajeInfo.style.display = 'block';
+            mensajeInfoTexto.textContent = texto;
+            mensajeExito.style.display = 'none';
+            mensajeError.style.display = 'none';
+        }
+
+        function ocultarMensajes() {
+            mensajeExito.style.display = 'none';
+            mensajeError.style.display = 'none';
+            mensajeInfo.style.display = 'none';
+        }
+
+        // ==========================================
+        // BUSCAR CITA POR ID
+        // ==========================================
+        async function buscarCita(citaId) {
+            if (!citaId || citaId.trim() === '') {
+                mostrarModal({
+                    titulo: 'ID invalido',
+                    mensaje: 'Por favor, ingresa un ID de cita valido.',
+                    botones: [{ texto: 'Entendido', clase: 'btn-modal-primario' }]
+                });
+                return;
+            }
+
+            citaId = citaId.trim();
+
+            spinner.style.display = 'block';
+            detallesCita.style.display = 'none';
+            btnGroup.style.display = 'none';
+            ocultarMensajes();
+
+            try {
+                const q = query(collection(db, "citas"), where("citaId", "==", citaId));
+                const snapshot = await getDocs(q);
+                
+                spinner.style.display = 'none';
+
+                if (snapshot.empty) {
+                    mostrarModal({
+                        titulo: 'Cita no encontrada',
+                        mensaje: 'No se encontró ninguna cita con el ID <strong>' + citaId + '</strong>.',
+                        botones: [{ texto: 'Intentar de nuevo', clase: 'btn-modal-primario' }]
+                    });
+                    return;
+                }
+
+                const doc = snapshot.docs[0];
+                citaDocId = doc.id;
+                citaData = doc.data();
+
+                if (citaData.estado === 'cancelada') {
+                    mostrarModal({
+                        titulo: 'Cita cancelada',
+                        mensaje: 'Esta cita ya fue cancelada anteriormente.',
+                        botones: [{ texto: 'Entendido', clase: 'btn-modal-primario' }]
+                    });
+                    detallesCita.style.display = 'block';
+                    btnGroup.style.display = 'none';
+                    gestionSubtitulo.textContent = 'Cita cancelada';
+                    mostrarDetalles(citaData);
+                    return;
+                }
+
+                mostrarDetalles(citaData);
+                detallesCita.style.display = 'block';
+                btnGroup.style.display = 'flex';
+                gestionSubtitulo.textContent = '¿Que deseas hacer con tu cita?';
+                inputContainer.style.display = 'none';
+
+            } catch (error) {
+                spinner.style.display = 'none';
+                mostrarModal({
+                    titulo: 'Error',
+                    mensaje: 'Hubo un error al buscar la cita. Por favor, intenta de nuevo.',
+                    botones: [{ texto: 'Intentar de nuevo', clase: 'btn-modal-primario' }]
+                });
+            }
+        }
+
+        // ==========================================
+        // MOSTRAR DETALLES
+        // ==========================================
+        function mostrarDetalles(data) {
+            document.getElementById('detalleServicio').textContent = data.servicio || 'No especificado';
+            document.getElementById('detalleBarbero').textContent = data.barbero || 'No especificado';
+            document.getElementById('detalleFechaHora').textContent = data.fechaHora || '—';
+            document.getElementById('detalleCliente').textContent = data.cliente || '—';
+            document.getElementById('detalleEmail').textContent = data.email || '—';
+            document.getElementById('detalleTelefono').textContent = data.telefono || '—';
+            document.getElementById('detalleCitaId').textContent = data.citaId || '—';
+        }
+
+        // ==========================================
+        // CANCELAR CITA
+        // ==========================================
+        window.cancelarCita = function() {
+            if (!citaData || !citaDocId) return;
+            
+            mostrarModal({
+                titulo: 'Cancelar cita',
+                mensaje: `
+                    ¿Estas seguro de que quieres cancelar esta cita?
+                    <br><br>
+                    <strong>Servicio:</strong> ${citaData.servicio}<br>
+                    <strong>Barbero:</strong> ${citaData.barbero}<br>
+                    <strong>Fecha y Hora:</strong> ${citaData.fechaHora}
+                    <br><br>
+                    Esta accion no se puede deshacer.
+                `,
+                botones: [
+                    { texto: 'Si, cancelar', clase: 'btn-modal-peligro', accion: confirmarCancelar },
+                    { texto: 'No, volver', clase: 'btn-modal-secundario' }
+                ]
+            });
+        };
+
+        async function confirmarCancelar() {
+            spinner.style.display = 'block';
+            btnGroup.style.display = 'none';
+            ocultarMensajes();
+
+            try {
+                const citaRef = doc(db, "citas", citaDocId);
+                await updateDoc(citaRef, {
+                    estado: 'cancelada',
+                    fechaCancelacion: new Date().toISOString()
+                });
+                
+                const datosParaCorreo = {
+                    cliente: citaData.cliente || 'No especificado',
+                    telefono: citaData.telefono || 'No especificado',
+                    email: citaData.email || 'No especificado',
+                    notas: citaData.notas || 'Sin notas adicionales',
+                    servicio: citaData.servicio || 'No especificado',
+                    duracion: citaData.duracion || 'No especificado',
+                    precio: citaData.precio || 'No especificado',
+                    barbero: citaData.barbero || 'No especificado',
+                    fechaHora: citaData.fechaHora || '—',
+                    citaId: citaData.citaId || '—'
+                };
+                
+                await enviarNotificacionEmailJS('cancelada', datosParaCorreo);
+                
+                spinner.style.display = 'none';
+                
+                mostrarModal({
+                    titulo: 'Cita cancelada',
+                    mensaje: 'Tu cita ha sido cancelada exitosamente.',
+                    botones: [{ texto: 'Entendido', clase: 'btn-modal-exito', accion: function() {
+                        gestionSubtitulo.textContent = 'Cita cancelada';
+                        btnGroup.style.display = 'none';
+                        inputContainer.style.display = 'block';
+                        cerrarModal();
+                    }}]
+                });
+                
+            } catch (error) {
+                spinner.style.display = 'none';
+                mostrarModal({
+                    titulo: 'Error',
+                    mensaje: 'Hubo un error al cancelar la cita. Por favor, intenta de nuevo.',
+                    botones: [{ texto: 'Intentar de nuevo', clase: 'btn-modal-primario' }]
+                });
+                btnGroup.style.display = 'flex';
+            }
+        }
+
+        // ==========================================
+        // REAGENDAR CITA
+        // ==========================================
+        window.reagendarCita = function() {
+            if (!citaData || !citaDocId) return;
+            
+            mostrarModal({
+                titulo: 'Reagendar cita',
+                mensaje: `
+                    Al reagendar, tu cita actual sera cancelada.
+                    <br><br>
+                    <strong>Cita actual:</strong> ${citaData.fechaHora}<br>
+                    <strong>Barbero:</strong> ${citaData.barbero}
+                    <br><br>
+                    ¿Quieres continuar?
+                `,
+                botones: [
+                    { texto: 'Si, reagendar', clase: 'btn-modal-primario', accion: confirmarReagendar },
+                    { texto: 'No, volver', clase: 'btn-modal-secundario' }
+                ]
+            });
+        };
+
+        async function confirmarReagendar() {
+            spinner.style.display = 'block';
+            btnGroup.style.display = 'none';
+            ocultarMensajes();
+
+            try {
+                const citaRef = doc(db, "citas", citaDocId);
+                await updateDoc(citaRef, {
+                    estado: 'cancelada',
+                    fechaCancelacion: new Date().toISOString(),
+                    motivoCancelacion: 'Reagendada por el cliente'
+                });
+                
+                const datosParaCorreo = {
+                    cliente: citaData.cliente || 'No especificado',
+                    telefono: citaData.telefono || 'No especificado',
+                    email: citaData.email || 'No especificado',
+                    notas: citaData.notas || 'Sin notas adicionales',
+                    servicio: citaData.servicio || 'No especificado',
+                    duracion: citaData.duracion || 'No especificado',
+                    precio: citaData.precio || 'No especificado',
+                    barbero: citaData.barbero || 'No especificado',
+                    fechaHora: citaData.fechaHora || '—',
+                    citaId: citaData.citaId || '—'
+                };
+                
+                await enviarNotificacionEmailJS('reagendada', datosParaCorreo);
+                
+                spinner.style.display = 'none';
+                
+                const params = new URLSearchParams({
+                    servicio: citaData.servicioId || '',
+                    barbero: citaData.barberoId || '',
+                    email: citaData.email || '',
+                    nombre: citaData.cliente || '',
+                    telefono: citaData.telefono || '',
+                    reagendar: 'true'
+                });
+                
+                window.location.href = `reserva.html?${params.toString()}`;
+                
+            } catch (error) {
+                spinner.style.display = 'none';
+                mostrarModal({
+                    titulo: 'Error',
+                    mensaje: 'Hubo un error al reagendar. Por favor, intenta de nuevo.',
+                    botones: [{ texto: 'Intentar de nuevo', clase: 'btn-modal-primario' }]
+                });
+                btnGroup.style.display = 'flex';
+            }
+        }
+
+        // ==========================================
+        // EVENT LISTENERS
+        // ==========================================
+        btnBuscar.addEventListener('click', function() {
+            buscarCita(inputCitaId.value);
+        });
+
+        inputCitaId.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                buscarCita(inputCitaId.value);
+            }
+        });
+
+        btnCancelar.addEventListener('click', window.cancelarCita);
+        btnReagendar.addEventListener('click', window.reagendarCita);
+
+        // ==========================================
+        // VERIFICAR SI HAY ID EN LA URL
+        // ==========================================
+        const urlParams = new URLSearchParams(window.location.search);
+        const citaIdFromUrl = urlParams.get('id');
+
+        if (citaIdFromUrl) {
+            inputCitaId.value = citaIdFromUrl;
+            buscarCita(citaIdFromUrl);
+        }
+
+    </script>
+
+</body>
+</html>

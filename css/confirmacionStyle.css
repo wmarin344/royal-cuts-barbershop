@@ -1,0 +1,522 @@
+/* ======================================== 
+   CONFIRMACION.HTML
+   ======================================== */
+
+/* ===== HEADER SUPERIOR - FIJO CON FONDO BLANCO ===== */
+.reserva-header-superior {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1vw + 2px, 14px);
+    padding: clamp(8px, 1vw + 4px, 14px) clamp(10px, 1.5vw + 4px, 18px);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--color-separator);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.reserva-header-superior .btn-regresar-simple {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    text-decoration: none;
+    flex-shrink: 0;
+    color: var(--color-text-primary);
+}
+
+.reserva-header-superior .btn-regresar-simple svg {
+    width: clamp(16px, 1.5vw + 8px, 22px);
+    height: clamp(16px, 1.5vw + 8px, 22px);
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+}
+
+.reserva-header-superior .logo-area {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1vw + 2px, 14px);
+}
+
+.reserva-header-superior .logo-area img {
+    height: clamp(24px, 2.5vw + 10px, 34px);
+    width: clamp(24px, 2.5vw + 10px, 34px);
+    object-fit: cover;
+    border: 1px solid var(--color-separator);
+    border-radius: 50%;
+}
+
+.reserva-header-superior .logo-area span {
+    font-size: var(--text-base);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+}
+
+/* ===== TARJETA DE CONFIRMACIÓN - CON BORDE VISIBLE ===== */
+.confirmacion-wrapper {
+    max-width: clamp(340px, 45vw + 40px, 520px);
+    width: 100%;
+    margin: clamp(60px, 8vh + 30px, 90px) auto;
+    padding: 0 clamp(16px, 3vw, 32px);
+}
+
+.confirmacion-container {
+    width: 100%;
+    background: var(--color-card);
+    padding: clamp(24px, 3vw + 12px, 52px) clamp(16px, 2vw + 8px, 44px);
+    border: 1px solid var(--color-separator);
+    border-radius: var(--radius-card);
+    text-align: center;
+    animation: fadeUp 0.6s ease-out;
+    box-shadow: var(--shadow-card);
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.confirmacion-logo {
+    width: clamp(100px, 12vw + 40px, 200px);
+    height: clamp(100px, 12vw + 40px, 200px);
+    object-fit: cover;
+    margin-bottom: clamp(8px, 1vw + 2px, 14px);
+    border: 2px solid var(--color-separator);
+    border-radius: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.confirmacion-nombre {
+    font-size: var(--text-xl);
+    margin-bottom: clamp(12px, 1.5vw + 4px, 22px);
+    display: block;
+    font-weight: var(--fw-bold);
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+}
+
+.icono-exito-svg {
+    width: clamp(44px, 5vw + 20px, 80px);
+    height: clamp(44px, 5vw + 20px, 80px);
+    margin-bottom: clamp(8px, 1vw + 2px, 14px);
+    display: inline-block;
+}
+
+.icono-exito-svg circle {
+    stroke: var(--color-system-green);
+}
+
+.icono-exito-svg path {
+    stroke: var(--color-system-green);
+}
+
+.titulo {
+    font-size: var(--text-xl);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-primary);
+    margin-bottom: clamp(8px, 1vw + 2px, 14px);
+    letter-spacing: -0.02em;
+}
+
+.subtitulo {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin-bottom: clamp(20px, 2.5vw + 10px, 36px);
+    line-height: 1.6;
+}
+
+.subtitulo strong {
+    color: var(--color-text-primary);
+    font-weight: var(--fw-semibold);
+}
+
+/* ===== DETALLES - CON MÁS SEPARACIÓN ENTRE CAMPOS Y VALORES ===== */
+.detalle-card {
+    background: var(--color-background);
+    border: 1px solid var(--color-separator);
+    border-radius: var(--radius-card);
+    padding: clamp(14px, 1.5vw + 6px, 28px);
+    text-align: left;
+    margin-bottom: clamp(20px, 2.5vw + 10px, 36px);
+}
+
+.detalle-titulo {
+    font-size: var(--text-base);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    text-align: center;
+    margin-bottom: clamp(14px, 1.5vw + 6px, 24px);
+    padding-bottom: clamp(10px, 1vw + 4px, 16px);
+    border-bottom: 1px solid var(--color-separator);
+    letter-spacing: -0.01em;
+}
+
+.detalle-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: clamp(10px, 1vw + 4px, 16px) 0;
+    border-bottom: 1px solid var(--color-separator);
+    gap: clamp(14px, 2vw + 6px, 24px);
+}
+
+.detalle-item:last-child {
+     border-bottom: none;
+    border-top: 2px solid var(--color-separator);  /* ← Solo queda la gruesa */
+    padding-top: clamp(12px, 1.2vw + 4px, 16px);
+    margin-top: clamp(4px, 0.4vw + 2px, 8px);
+    
+}
+.detalle-item:nth-last-child(2) {
+    border-bottom: none;  /* ← Quita la línea delgada del item anterior */
+}
+
+.detalle-label {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.detalle-value {
+    font-size: var(--text-sm);
+    color: var(--color-text-primary);
+    text-align: right;
+    word-wrap: break-word;
+    flex: 1;
+    font-weight: var(--fw-medium);
+}
+
+.detalle-item:last-child .detalle-value {
+    color: var(--color-text-primary);
+    font-weight: var(--fw-bold);
+    font-size: var(--text-base);
+}
+
+/* ===== BOTONES ===== */
+.botones-group {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1vw + 4px, 14px);
+}
+
+.btn-volver {
+    display: inline-block;
+    background: var(--color-text-primary);
+    color: #ffffff;
+    padding: clamp(10px, 1vw + 4px, 16px) clamp(20px, 2.5vw + 10px, 36px);
+    border-radius: var(--radius-button);
+    text-decoration: none;
+    font-size: var(--text-base);
+    font-weight: var(--fw-semibold);
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: -0.01em;
+}
+
+.btn-volver:hover {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+.btn-volver:active {
+    transform: scale(0.95);
+}
+
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(8px, 0.8vw + 4px, 12px);
+    background: #25D366;
+    color: white;
+    padding: clamp(10px, 1vw + 4px, 16px) clamp(20px, 2.5vw + 10px, 36px);
+    border-radius: var(--radius-button);
+    text-decoration: none;
+    font-size: var(--text-base);
+    font-weight: var(--fw-semibold);
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: -0.01em;
+}
+
+.btn-whatsapp:hover {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+.btn-whatsapp:active {
+    transform: scale(0.95);
+}
+
+.btn-whatsapp svg {
+    width: clamp(16px, 1.5vw + 8px, 24px);
+    height: clamp(16px, 1.5vw + 8px, 24px);
+    fill: white;
+    flex-shrink: 0;
+}
+
+/* ======================================== 
+   RESPONSIVE CONFIRMACION
+   ======================================== */
+@media (max-width: 768px) {
+    .confirmacion-container {
+        padding: clamp(20px, 2.5vw + 10px, 36px) clamp(14px, 1.8vw + 6px, 28px);
+        border-radius: var(--radius-card);
+    }
+    
+    .confirmacion-logo {
+        width: clamp(80px, 10vw + 30px, 160px);
+        height: clamp(80px, 10vw + 30px, 160px);
+    }
+    
+    .confirmacion-nombre {
+        font-size: var(--text-xl);
+    }
+    
+    .icono-exito-svg {
+        width: clamp(40px, 4vw + 18px, 64px);
+        height: clamp(40px, 4vw + 18px, 64px);
+    }
+    
+    .titulo {
+        font-size: var(--text-xl);
+    }
+    
+    .detalle-card {
+        padding: clamp(12px, 1.2vw + 4px, 18px);
+        border-radius: var(--radius-card);
+    }
+    
+    .detalle-item {
+        padding: clamp(8px, 0.8vw + 2px, 12px) 0;
+        gap: clamp(12px, 1.5vw + 4px, 18px);
+        flex-wrap: wrap;
+    }
+    
+    .detalle-value {
+        text-align: right;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .reserva-header-superior {
+        padding: clamp(6px, 0.8vw + 2px, 10px) clamp(8px, 1vw + 4px, 14px);
+    }
+    
+    .reserva-header-superior .logo-area img {
+        height: clamp(22px, 2.5vw + 10px, 30px);
+        width: clamp(22px, 2.5vw + 10px, 30px);
+    }
+    
+    .reserva-header-superior .logo-area span {
+        font-size: var(--text-sm);
+    }
+    
+    .confirmacion-wrapper {
+        margin: clamp(12px, 1.5vw + 6px, 24px) auto;
+    }
+    
+    .confirmacion-container {
+        padding: clamp(16px, 2vw + 8px, 28px) clamp(12px, 1.5vw + 4px, 18px);
+        border-radius: var(--radius-card);
+    }
+    
+    .confirmacion-logo {
+        width: clamp(64px, 8vw + 24px, 130px);
+        height: clamp(64px, 8vw + 24px, 130px);
+    }
+    
+    .confirmacion-nombre {
+        font-size: var(--text-lg);
+    }
+    
+    .icono-exito-svg {
+        width: clamp(36px, 4vw + 14px, 56px);
+        height: clamp(36px, 4vw + 14px, 56px);
+    }
+    
+    .titulo {
+        font-size: var(--text-lg);
+    }
+    
+    .subtitulo {
+        font-size: var(--text-sm);
+    }
+    
+    .detalle-item {
+        font-size: var(--text-xs);
+        padding: clamp(6px, 0.6vw + 2px, 10px) 0;
+        gap: clamp(10px, 1.2vw + 4px, 16px);
+        flex-wrap: wrap;
+    }
+    
+    .detalle-label {
+        font-size: var(--text-xs);
+    }
+    
+    .detalle-value {
+        font-size: var(--text-xs);
+    }
+    
+    .btn-volver,
+    .btn-whatsapp {
+        padding: clamp(8px, 0.8vw + 4px, 14px) clamp(16px, 2vw + 8px, 28px);
+        font-size: var(--text-sm);
+        border-radius: var(--radius-button);
+    }
+    
+    .btn-whatsapp svg {
+        width: clamp(14px, 1.2vw + 6px, 20px);
+        height: clamp(14px, 1.2vw + 6px, 20px);
+    }
+}
+
+@media (max-width: 400px) {
+    .reserva-header-superior {
+        padding: clamp(4px, 0.5vw + 2px, 8px) clamp(4px, 0.5vw + 2px, 10px);
+        gap: clamp(4px, 0.5vw + 2px, 8px);
+    }
+    
+    .reserva-header-superior .logo-area img {
+        height: clamp(20px, 2vw + 10px, 26px);
+        width: clamp(20px, 2vw + 10px, 26px);
+    }
+    
+    .reserva-header-superior .logo-area span {
+        font-size: var(--text-xs);
+    }
+    
+    .reserva-header-superior .btn-regresar-simple svg {
+        width: clamp(14px, 1.5vw + 6px, 18px);
+        height: clamp(14px, 1.5vw + 6px, 18px);
+    }
+    
+    .confirmacion-wrapper {
+        margin: clamp(8px, 1vw + 4px, 14px) auto;
+        padding: 0 clamp(4px, 0.5vw + 2px, 8px);
+    }
+    
+    .confirmacion-container {
+        padding: clamp(12px, 1.5vw + 6px, 22px) clamp(8px, 1vw + 4px, 14px);
+        border-radius: var(--radius-card);
+    }
+    
+    .confirmacion-logo {
+        width: clamp(56px, 6vw + 20px, 110px);
+        height: clamp(56px, 6vw + 20px, 110px);
+    }
+    
+    .confirmacion-nombre {
+        font-size: var(--text-lg);
+        margin-bottom: clamp(8px, 1vw + 2px, 14px);
+    }
+    
+    .icono-exito-svg {
+        width: clamp(30px, 3vw + 12px, 48px);
+        height: clamp(30px, 3vw + 12px, 48px);
+    }
+    
+    .titulo {
+        font-size: var(--text-md);
+    }
+    
+    .subtitulo {
+        font-size: var(--text-sm);
+        margin-bottom: clamp(14px, 1.5vw + 6px, 22px);
+    }
+    
+    .detalle-card {
+        padding: clamp(8px, 0.8vw + 4px, 14px);
+        margin-bottom: clamp(14px, 1.5vw + 6px, 22px);
+        border-radius: var(--radius-card);
+    }
+    
+    .detalle-titulo {
+        font-size: var(--text-sm);
+        padding-bottom: clamp(6px, 0.8vw + 2px, 10px);
+        margin-bottom: clamp(8px, 1vw + 2px, 14px);
+    }
+    
+    .detalle-item {
+        padding: clamp(4px, 0.4vw + 2px, 8px) 0;
+        gap: clamp(8px, 1vw + 2px, 14px);
+    }
+    
+    .detalle-label {
+        font-size: var(--text-xs);
+    }
+    
+    .detalle-value {
+        font-size: var(--text-xs);
+    }
+    
+    .btn-volver,
+    .btn-whatsapp {
+        padding: clamp(6px, 0.6vw + 3px, 12px) clamp(10px, 1.2vw + 4px, 18px);
+        font-size: var(--text-sm);
+        border-radius: var(--radius-button);
+    }
+    
+    .btn-whatsapp svg {
+        width: clamp(12px, 1vw + 4px, 18px);
+        height: clamp(12px, 1vw + 4px, 18px);
+    }
+}
+/* ======================================== 
+   ID DE CITA - ESTILOS ESPECIALES (SIN HEREDAR)
+   ======================================== */
+
+/* Item del ID - sin bordes raros */
+.detalle-item.id-cita {
+    border-top: 1px solid var(--color-separator) !important;
+    border-bottom: none !important;
+    padding-top: 14px !important;
+    padding-bottom: 8px !important;
+    margin-top: 6px !important;
+    margin-bottom: 0 !important;
+}
+
+.detalle-item.id-cita .detalle-label {
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.detalle-item.id-cita .detalle-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    word-break: break-all;
+}
+
+/* ===== MENSAJE GUARDAR ID (FUERA DEL DETALLE-ITEM) ===== */
+.mensaje-guardar-id {
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 2px;
+}
+
+.mensaje-guardar-id span {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+}

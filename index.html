@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Royal Cuts Barbershop</title>
+    <meta name="description" content="Royal Cuts Barbershop - Cortes de cabello, barba y estilismo premium. Reserva tu cita con nuestros barberos expertos.">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+    
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/indexStyle.css">
+
+    <!-- Datos estructurados para SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Royal Cuts Barbershop",
+        "image": "assets/logo.jpeg",
+        "telephone": "+529999181862",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ciudad de México",
+            "addressCountry": "MX"
+        },
+        "openingHours": "Mo-Sa 09:00-20:00",
+        "priceRange": "$$"
+    }
+    </script>
+</head>
+<body>
+
+    <!-- ===== NAVEGACIÓN PRINCIPAL ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="nav-logo" id="logoLink">
+                <img src="assets/logo.jpeg" alt="Logo Royal Cuts">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#servicios" class="nav-link" data-section="servicios">Servicios</a></li>
+                <li><a href="#galeria" class="nav-link" data-section="galeria">Galería</a></li>
+                <li><a href="#equipo" class="nav-link" data-section="equipo">Equipo</a></li>
+                <li><a href="#nosotros" class="nav-link" data-section="nosotros">Nosotros</a></li>
+                <li><a href="#contacto" class="nav-link" data-section="contacto">Contacto</a></li>
+                <div class="nav-indicator" id="navIndicator"></div>
+            </ul>
+
+            <div class="nav-contact">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+                </svg>
+                <span>999 918 1862</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HEADER CON IMAGEN PRINCIPAL ===== -->
+    <header id="mainHeader">
+        <div class="header-image-wrapper" id="headerImageWrapper">
+            <img src="assets/banner.png" alt="Royal Cuts Barbershop - Interiores y ambiente" class="header-img" loading="lazy">
+            <div class="linea-dorada"></div>
+        </div>
+    </header>
+
+    <!-- Espaciador para móvil -->
+    <div class="header-spacer" id="headerSpacer"></div>
+
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
+    <div class="contenedor-dos-columnas">
+
+        <!-- Columna izquierda: contenido principal -->
+        <div class="columna-izquierda">
+
+            <!-- Tarjeta de información para móvil -->
+            <div class="tarjeta-info-movil" id="tarjetaInfoMovil">
+                <div class="tarjeta-info-inner-movil">
+                    <div class="tarjeta-header-movil">
+                        <img src="assets/logo.jpeg" alt="Royal Cuts" class="tarjeta-logo-movil" loading="lazy">
+                        <h2 class="tarjeta-titulo-movil">Royal Cuts Barbershop</h2>
+                    </div>
+                    <div class="info-estado-horario-movil">
+                        <div class="estado-horario-header-movil" id="toggleHorarioMovilBtn" role="button" tabindex="0" aria-expanded="false">
+                            <p id="estado-horario-movil" class="estado-horario-movil"></p>
+                            <span class="flecha-horario-movil" id="flechaHorarioMovil">❯</span>
+                        </div>
+                        <div class="horario-detalle-movil" id="horarioDetalleMovil">
+                            <ul>
+                                <li><span>Lunes</span> <span>9:00 AM - 8:00 PM</span></li>
+                                <li><span>Martes</span> <span>9:00 AM - 8:00 PM</span></li>
+                                <li><span>Miércoles</span> <span>9:00 AM - 8:00 PM</span></li>
+                                <li><span>Jueves</span> <span>9:00 AM - 8:00 PM</span></li>
+                                <li><span>Viernes</span> <span>9:00 AM - 8:00 PM</span></li>
+                                <li><span>Sábado</span> <span>9:00 AM - 8:00 PM</span></li>
+                                <li class="domingo"><span>Domingo</span> <span>Cerrado</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Políticas versión móvil -->
+                    <div class="politicas-movil">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="display: inline-block; vertical-align: middle; margin-right: 4px; flex-shrink: 0;">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                        </svg>
+                        <span class="politicas-texto">Reserva con mín. 1h de anticipación · </span>
+                        <a href="#" class="politicas-link" onclick="abrirModalPoliticas(); return false;">Bueno saber</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SECCIÓN: SERVICIOS ===== -->
+            <section id="servicios" class="seccion-bloque section-card" data-section="servicios">
+                <h2 class="titulo-seccion">Servicios</h2>
+
+                <div class="lista-servicios-enfilados">
+
+                    <div class="tarjeta-servicio-linea" data-url="reserva.html?servicio=corte-tijera">
+                        <img src="assets/logo.jpeg" alt="Corte a tijera estilizado" class="servicio-mini-img" loading="lazy">
+                        <div class="servicio-contenido">
+                            <h3>Corte a tijera estilizado y cabello largo</h3>
+                            <div class="servicio-meta-fila">
+                                <span class="duracion-texto">1h 30min</span>
+                                <span class="separador">•</span>
+                                <span class="detalles-toggle" data-servicio="detalle-1">Ver detalles</span>
+                                <span class="separador">•</span>
+                                <span class="precio-texto">300 $</span>
+                            </div>
+                            <div class="detalles-contenido" id="detalle-1">
+                                <p>Cuando tu corte requiera secciones, sea largo medio, acabado con máquina o reducción de tu corte largo, esta es la opción. Ejemplos cortes Old money, wolfcut, mid part largo, mudcut o coreano.</p>
+                            </div>
+                        </div>
+                        <a href="reserva.html?servicio=corte-tijera" class="btn-reserva-linea" aria-label="Reservar Corte a tijera estilizado">❯</a>
+                    </div>
+
+                    <div class="tarjeta-servicio-linea" data-url="reserva.html?servicio=corte-sencillo">
+                        <img src="assets/logo.jpeg" alt="Corte sencillo express" class="servicio-mini-img" loading="lazy">
+                        <div class="servicio-contenido">
+                            <h3>Corte sencillo (corte express)</h3>
+                            <div class="servicio-meta-fila">
+                                <span class="duracion-texto">30min</span>
+                                <span class="separador">•</span>
+                                <span class="detalles-toggle" data-servicio="detalle-2">Ver detalles</span>
+                                <span class="separador">•</span>
+                                <span class="precio-texto">150 $</span>
+                            </div>
+                            <div class="detalles-contenido" id="detalle-2">
+                                <p>Corte en menos de 30 minutos, numero 1 o 2 a los lados con maquina y despunte de la parte de arriba, peinado. NO DESVANECIDO (no fade)</p>
+                            </div>
+                        </div>
+                        <a href="reserva.html?servicio=corte-sencillo" class="btn-reserva-linea" aria-label="Reservar Corte sencillo">❯</a>
+                    </div>
+
+                    <div class="tarjeta-servicio-linea" data-url="reserva.html?servicio=corte-cabello">
+                        <img src="assets/logo.jpeg" alt="Corte de cabello" class="servicio-mini-img" loading="lazy">
+                        <div class="servicio-contenido">
+                            <h3>Corte de cabello / Haircut</h3>
+                            <div class="servicio-meta-fila">
+                                <span class="duracion-texto">45min</span>
+                                <span class="separador">•</span>
+                                <span class="detalles-toggle" data-servicio="detalle-3">Ver detalles</span>
+                                <span class="separador">•</span>
+                                <span class="precio-texto">250 $</span>
+                            </div>
+                            <div class="detalles-contenido" id="detalle-3">
+                                <p>Querido cliente si tienes cabello largo llegando a los hombros o pasando y quieres un corte de cabello largo, o solamente a tijera, selecciona la opción transformación de largo a corto o corte a tijera, por favor recuerda llegar puntual.</p>
+                            </div>
+                        </div>
+                        <a href="reserva.html?servicio=corte-cabello" class="btn-reserva-linea" aria-label="Reservar Corte de cabello">❯</a>
+                    </div>
+
+                    <div class="tarjeta-servicio-linea" data-url="reserva.html?servicio=barba-ritual">
+                        <img src="assets/logo.jpeg" alt="Barba ritual" class="servicio-mini-img" loading="lazy">
+                        <div class="servicio-contenido">
+                            <h3>Barba / Beard (Ritual)</h3>
+                            <div class="servicio-meta-fila">
+                                <span class="duracion-texto">45 min</span>
+                                <span class="separador">•</span>
+                                <span class="detalles-toggle" data-servicio="detalle-4">Ver detalles</span>
+                                <span class="separador">•</span>
+                                <span class="precio-texto">250 $</span>
+                            </div>
+                            <div class="detalles-contenido" id="detalle-4">
+                                <p>Delineado, afeitado tradicional, servicio de aceites, toallas frías y calientes, perfilado con navaja, secado de barba, bálsamos y after shave.</p>
+                            </div>
+                        </div>
+                        <a href="reserva.html?servicio=barba-ritual" class="btn-reserva-linea" aria-label="Reservar Barba ritual">❯</a>
+                    </div>
+
+                    <div class="tarjeta-servicio-linea" data-url="reserva.html?servicio=transformacion-largo-corto">
+                        <img src="assets/logo.jpeg" alt="Transformación de largo a corto" class="servicio-mini-img" loading="lazy">
+                        <div class="servicio-contenido">
+                            <h3>Transformación de largo a corto</h3>
+                            <div class="servicio-meta-fila">
+                                <span class="duracion-texto">1h 15min</span>
+                                <span class="separador">•</span>
+                                <span class="detalles-toggle" data-servicio="detalle-5">Ver detalles</span>
+                                <span class="separador">•</span>
+                                <span class="precio-texto">280 $</span>
+                            </div>
+                            <div class="detalles-contenido" id="detalle-5">
+                                <p>Cabello largo a mas corto o desvanecido lleva un tiempo mas detallado, este servicio te brinda los minutos necesarios para tu transformación</p>
+                            </div>
+                        </div>
+                        <a href="reserva.html?servicio=transformacion-largo-corto" class="btn-reserva-linea" aria-label="Reservar Transformación de largo a corto">❯</a>
+                    </div>
+
+                    <div class="tarjeta-servicio-linea" data-url="reserva.html?servicio=cabello-largo-barba">
+                        <img src="assets/logo.jpeg" alt="Cabello largo y barba" class="servicio-mini-img" loading="lazy">
+                        <div class="servicio-contenido">
+                            <h3>Cabello largo + barba</h3>
+                            <div class="servicio-meta-fila">
+                                <span class="duracion-texto">1h 30min</span>
+                                <span class="separador">•</span>
+                                <span class="detalles-toggle" data-servicio="detalle-6">Ver detalles</span>
+                                <span class="separador">•</span>
+                                <span class="precio-texto">500 $</span>
+                            </div>
+                            <div class="detalles-contenido" id="detalle-6">
+                                <p>Corte de cabello largo a corto, corte de cabello largo a medio, corte a tijera + arreglo o ritual de barba.</p>
+                            </div>
+                        </div>
+                        <a href="reserva.html?servicio=cabello-largo-barba" class="btn-reserva-linea" aria-label="Reservar Cabello largo y barba">❯</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN: GALERÍA ===== -->
+            <section id="galeria" class="seccion-bloque section-card" data-section="galeria">
+                <h2 class="titulo-seccion">Galería</h2>
+                <div class="galeria-grid" role="group" aria-label="Galería de trabajos">
+                    <button class="galeria-item" onclick="abrirVisor(0)" aria-label="Ver trabajo 1" type="button">
+                        <img src="assets/banner.png" alt="Trabajo de barbería - Corte fade" loading="lazy">
+                    </button>
+                    <button class="galeria-item" onclick="abrirVisor(1)" aria-label="Ver trabajo 2" type="button">
+                        <img src="assets/logo.jpeg" alt="Trabajo de barbería - Estilismo" loading="lazy">
+                    </button>
+                    <button class="galeria-item" onclick="abrirVisor(2)" aria-label="Ver trabajo 3" type="button">
+                        <img src="assets/logo.jpeg" alt="Trabajo de barbería - Barba" loading="lazy">
+                    </button>
+                    <button class="galeria-item" onclick="abrirVisor(3)" aria-label="Ver trabajo 4" type="button">
+                        <img src="assets/logo.jpeg" alt="Trabajo de barbería - Corte clásico" loading="lazy">
+                    </button>
+                    <button class="galeria-item" onclick="abrirVisor(4)" aria-label="Ver trabajo 5" type="button">
+                        <img src="assets/logo.jpeg" alt="Trabajo de barbería - Diseño" loading="lazy">
+                    </button>
+                    <button class="galeria-item" onclick="abrirVisor(5)" aria-label="Ver trabajo 6" type="button">
+                        <img src="assets/logo.jpeg" alt="Trabajo de barbería - Acabado" loading="lazy">
+                    </button>
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN: EQUIPO ===== -->
+            <section id="equipo" class="seccion-bloque section-card" data-section="equipo">
+                <h2 class="titulo-seccion">Nuestros Barberos</h2>
+                <div class="lista-barberos-enfilados">
+
+                    <a href="reserva.html?barbero=alex" class="enlace-tarjeta-barbero-linea" aria-label="Ver servicios de Alex King López">
+                        <div class="tarjeta-barbero-linea">
+                            <img src="assets/logo.jpeg" alt="Alex King López - Barbero" class="barbero-avatar" loading="lazy">
+                            <div class="barbero-datos">
+                                <h4>Alex "King" López</h4>
+                                <p class="barbero-puesto">Especialista en Fades Modernos y Estilismo</p>
+                                <p class="barbero-desc">Experiencia y especialidad en asistencia de visagismo. Si tienes duda de algún estilo o tipo de corte, él es el indicado.</p>
+                                <span class="mini-btn-barbero">Ver Servicios y Reservar</span>
+                            </div>
+                            <span class="btn-reserva-linea">❯</span>
+                        </div>
+                    </a>
+
+                    <a href="reserva.html?barbero=carlos" class="enlace-tarjeta-barbero-linea" aria-label="Ver servicios de Carlos Martínez">
+                        <div class="tarjeta-barbero-linea">
+                            <img src="assets/logo.jpeg" alt="Carlos Martínez - Barbero" class="barbero-avatar" loading="lazy">
+                            <div class="barbero-datos">
+                                <h4>Carlos Martínez</h4>
+                                <p class="barbero-puesto">Maestro Navajero y Rituales de Barba</p>
+                                <p class="barbero-desc">Especialista en afeitado tradicional, delineados con navaja libre y cuidado premium de la barba.</p>
+                                <span class="mini-btn-barbero">Ver Servicios y Reservar</span>
+                            </div>
+                            <span class="btn-reserva-linea">❯</span>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN: NOSOTROS ===== -->
+            <section id="nosotros" class="seccion-bloque nosotros-caja section-card" data-section="nosotros">
+                <h2 class="titulo-seccion">Nosotros</h2>
+                <p>En Royal Cuts Barbershop, combinamos la tradición de la barbería clásica con técnicas modernas. Somos un equipo apasionado por el detalle, dedicados a ofrecer no solo un corte, sino una experiencia de alta calidad para el caballero moderno.</p>
+            </section>
+
+        </div>
+
+        <!-- ===== COLUMNA DERECHA (SOLO ESCRITORIO) ===== -->
+        <div class="columna-derecha">
+            <div class="tarjeta-fija-barberia">
+                <img src="assets/logo.jpeg" alt="Logo Royal Cuts" class="tarjeta-logo-centro" loading="lazy">
+                <h2>Royal Cuts Barbershop</h2>
+                <a href="reserva.html" class="btn-reservar-principal">Reservar</a>
+
+                <div class="info-estado-horario">
+                    <div class="estado-horario-header" id="toggleHorarioBtn" role="button" tabindex="0" aria-expanded="false">
+                        <p id="estado-horario" class="estado-horario"></p>
+                        <span class="flecha-horario" id="flechaHorario">❯</span>
+                    </div>
+                    <div class="horario-detalle" id="horarioDetalle">
+                        <ul>
+                            <li><span>Lunes</span> <span>9:00 AM - 8:00 PM</span></li>
+                            <li><span>Martes</span> <span>9:00 AM - 8:00 PM</span></li>
+                            <li><span>Miércoles</span> <span>9:00 AM - 8:00 PM</span></li>
+                            <li><span>Jueves</span> <span>9:00 AM - 8:00 PM</span></li>
+                            <li><span>Viernes</span> <span>9:00 AM - 8:00 PM</span></li>
+                            <li><span>Sábado</span> <span>9:00 AM - 8:00 PM</span></li>
+                            <li class="domingo"><span>Domingo</span> <span>Cerrado</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Políticas versión desktop -->
+                <div class="politicas-desktop">
+                    <span class="politicas-texto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16" style="display: inline-block; vertical-align: middle; margin-right: 4px; flex-shrink: 0;">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                        </svg>
+                        Reserva con mín. 1h de anticipación · 
+                    </span>
+                    <a href="#" class="politicas-link" onclick="abrirModalPoliticas(); return false;">Bueno saber</a>
+                </div>
+
+                <div class="bloque-contacto-lateral">
+                    <p class="titulo-lateral-contacto">Ponte en contacto con nosotros</p>
+                    <p class="telefono-lateral">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16" style="display: inline-block; vertical-align: middle; margin-right: 8px;">
+                            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
+                        </svg>
+                        999 918 1862
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Botón flotante de reserva -->
+    <a href="reserva.html" class="fab-reservar" id="fabReservar">
+        Reservar
+    </a>
+
+    <!-- ===== FOOTER ===== -->
+    <footer id="contacto" class="footer-completo section-card" data-section="contacto">
+        <h3 class="titulo-contacto-blanco">Contáctanos</h3>
+        <div class="redes-sociales">
+            <a href="https://www.facebook.com/?locale=es_LA" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.174.01 2.446.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.446-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.446-.048-3.298c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg>
+            </a>
+            <a href="https://www.google.com.mx/maps" target="_blank" rel="noopener noreferrer" aria-label="Ubicación en Google Maps">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/></svg>
+            </a>
+        </div>
+        <p>© 2026 Royal Cuts Barbershop. Todos los derechos reservados. · <a href="#" class="footer-privacidad-link" onclick="abrirModalPrivacidad(); return false;">Aviso de privacidad</a></p>
+    </footer>
+
+    <!-- ===== MODALES ===== -->
+
+    <!-- Modal: Políticas de reserva -->
+    <div id="modal-politicas" class="modal-visor" role="dialog" aria-modal="true" aria-label="Políticas de reserva">
+        <button class="cerrar-modal" onclick="cerrarModalPoliticas()" aria-label="Cerrar políticas">×</button>
+        <div class="contenedor-modal-contenido modal-contenido-texto">
+            <div class="modal-texto-inner-scroll">
+                <h2 class="modal-titulo">Políticas de Reserva</h2>
+                <div class="modal-contenido-scroll">
+                    <ul class="modal-lista">
+                        <li>• Reservas con un mínimo de 1 hora de anticipación.</li>
+                        <li>• Tolerancia de 15 minutos. Después de ese tiempo, la cita se puede reagendar o ceder a otro cliente en espera.</li>
+                        <li>• Cancelaciones: puedes cancelar o reprogramar tu cita hasta 2 horas antes sin costo. Cancelaciones de último momento o no presentarte (no-show) en 3 ocasiones pueden requerir un anticipo para futuras reservas.</li>
+                        <li>• Formas de pago aceptadas: efectivo, tarjeta de débito/crédito y transferencia.</li>
+                        <li>• Si llegas acompañado, te pedimos máximo 1 acompañante por silla, por espacio y comodidad de todos.</li>
+                        <li>• Los precios pueden variar ligeramente según el largo o condición del cabello; el barbero te lo confirmará antes de iniciar el servicio.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Aviso de privacidad -->
+    <div id="modal-privacidad" class="modal-visor" role="dialog" aria-modal="true" aria-label="Aviso de privacidad">
+        <button class="cerrar-modal" onclick="cerrarModalPrivacidad()" aria-label="Cerrar aviso de privacidad">×</button>
+        <div class="contenedor-modal-contenido modal-contenido-texto">
+            <div class="modal-texto-inner-scroll">
+                <h2 class="modal-titulo">Aviso de Privacidad</h2>
+                <div class="modal-contenido-scroll">
+                    <ul class="modal-lista">
+                        <li>• En Royal Cuts Barbershop recabamos tu nombre y número de teléfono únicamente para confirmar y dar seguimiento a tu cita.</li>
+                        <li>• No compartimos, vendemos ni cedemos tus datos a terceros bajo ninguna circunstancia.</li>
+                        <li>• Tus datos se conservan solo el tiempo necesario para la gestión de tu reserva y se eliminan periódicamente.</li>
+                        <li>• Puedes solicitar que eliminemos tu información en cualquier momento escribiéndonos por WhatsApp al número de contacto del sitio.</li>
+                        <li>• Este aviso puede actualizarse; cualquier cambio se reflejará en esta misma sección.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Visor de galería -->
+    <div id="modal-galeria" class="modal-visor" role="dialog" aria-modal="true" aria-label="Visor de galería">
+        <button class="cerrar-modal" onclick="cerrarVisor()" aria-label="Cerrar visor">×</button>
+        <button class="flecha-visor prev" onclick="cambiarFoto(-1)" aria-label="Foto anterior">❮</button>
+        <div class="contenedor-modal-contenido">
+            <img id="img-modal-grande" src="" alt="Vista ampliada del trabajo">
+        </div>
+        <button class="flecha-visor next" onclick="cambiarFoto(1)" aria-label="Foto siguiente">❯</button>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ==========================================
+        // NAVEGACIÓN: INDICADOR Y SCROLL SUAVE
+        // ==========================================
+
+        const navLinks = document.getElementById('navLinks');
+        const navIndicator = document.getElementById('navIndicator');
+        const navLinksArray = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section-card');
+
+        let isClickScrolling = false;
+        let clickTimeout;
+
+        function positionIndicator(element) {
+            if (!element) return;
+
+            const linkRect = element.getBoundingClientRect();
+            const navRect = navLinks.getBoundingClientRect();
+            const text = element.textContent.trim();
+
+            const tempSpan = document.createElement('span');
+            tempSpan.style.visibility = 'hidden';
+            tempSpan.style.position = 'absolute';
+            tempSpan.style.fontSize = window.innerWidth <= 480 ? '10px' : '12px';
+            tempSpan.style.fontWeight = element.classList.contains('active') ? '700' : '450';
+            tempSpan.style.letterSpacing = '-0.1px';
+            tempSpan.style.whiteSpace = 'nowrap';
+            tempSpan.textContent = text;
+            document.body.appendChild(tempSpan);
+
+            const textWidth = tempSpan.offsetWidth;
+            document.body.removeChild(tempSpan);
+
+            const textLeft = (linkRect.left - navRect.left) + navLinks.scrollLeft + (linkRect.width - textWidth) / 2;
+
+            navIndicator.style.width = textWidth + 'px';
+            navIndicator.style.transform = 'translateX(' + textLeft + 'px)';
+        }
+
+        function updateIndicator(element, immediate) {
+            if (immediate) {
+                navIndicator.style.transition = 'none';
+                positionIndicator(element);
+                navIndicator.offsetHeight;
+                navIndicator.style.transition = 'all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1)';
+            } else {
+                positionIndicator(element);
+            }
+        }
+
+        navLinksArray.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                isClickScrolling = true;
+                clearTimeout(clickTimeout);
+                clickTimeout = setTimeout(function() {
+                    isClickScrolling = false;
+                }, 1000);
+
+                navLinksArray.forEach(function(l) { l.classList.remove('active'); });
+                link.classList.add('active');
+                updateIndicator(link, true);
+
+                var targetId = link.getAttribute('href');
+                var targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    var navbarHeight = 44;
+                    var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            link.addEventListener('mouseenter', function() {
+                if (!isClickScrolling) positionIndicator(link);
+            });
+        });
+
+        navLinks.addEventListener('mouseleave', function() {
+            var activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) positionIndicator(activeLink);
+        });
+
+        function updateActiveSectionOnScroll() {
+            if (isClickScrolling) return;
+            
+            var scrollPosition = window.scrollY + 120;
+            var currentSection = null;
+            
+            var isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 10);
+            
+            if (isAtBottom && sections.length > 0) {
+                currentSection = sections[sections.length - 1];
+            } else {
+                sections.forEach(function(section) {
+                    var sectionTop = section.offsetTop - 60;
+                    var sectionBottom = sectionTop + section.offsetHeight;
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        currentSection = section;
+                    }
+                });
+            }
+            
+            if (currentSection) {
+                var sectionId = currentSection.getAttribute('data-section');
+                var activeLink = document.querySelector('.nav-link[data-section="' + sectionId + '"]');
+                if (activeLink) {
+                    document.querySelectorAll('.nav-link').forEach(function(l) {
+                        l.classList.remove('active');
+                    });
+                    activeLink.classList.add('active');
+                    positionIndicator(activeLink);
+                }
+            }
+        }
+
+        window.addEventListener('scroll', updateActiveSectionOnScroll, { passive: true });
+        window.addEventListener('resize', function() {
+            var activeLink = document.querySelector('.nav-link.active');
+            if (activeLink) positionIndicator(activeLink);
+        });
+
+        document.getElementById('logoLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            isClickScrolling = true;
+            clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(function() { isClickScrolling = false; }, 1000);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            navLinksArray.forEach(function(l) { l.classList.remove('active'); });
+            if (navLinksArray[0]) {
+                navLinksArray[0].classList.add('active');
+                updateIndicator(navLinksArray[0], true);
+            }
+        });
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var firstLink = navLinksArray[0];
+                if (firstLink) {
+                    firstLink.classList.add('active');
+                    updateIndicator(firstLink, true);
+                }
+                updateActiveSectionOnScroll();
+            }, 100);
+        });
+
+        // ==========================================
+        // TOGGLE DETALLES DE SERVICIOS
+        // ==========================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.detalles-toggle').forEach(function(element) {
+                element.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var tarjeta = this.closest('.tarjeta-servicio-linea');
+                    var detalleId = this.getAttribute('data-servicio');
+                    var contenido = document.getElementById(detalleId);
+
+                    if (contenido) {
+                        contenido.classList.toggle('abierto');
+                        this.textContent = contenido.classList.contains('abierto') ? 'Ocultar detalles' : 'Ver detalles';
+                    }
+                });
+            });
+
+            // Tarjetas de servicio clickeables
+            document.querySelectorAll('.tarjeta-servicio-linea').forEach(function(card) {
+                var reserveUrl = card.getAttribute('data-url');
+                if (!reserveUrl) return;
+
+                card.style.cursor = 'pointer';
+
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.detalles-toggle')) {
+                        return;
+                    }
+                    if (e.target.closest('.btn-reserva-linea')) {
+                        return;
+                    }
+
+                    if (reserveUrl) {
+                        window.location.href = reserveUrl;
+                    }
+                });
+
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        if (e.target.closest('.detalles-toggle')) {
+                            return;
+                        }
+                        if (e.target.closest('.btn-reserva-linea')) {
+                            return;
+                        }
+                        if (reserveUrl) {
+                            window.location.href = reserveUrl;
+                        }
+                    }
+                });
+            });
+
+            // Toggle horario - Desktop
+            function toggleHorario() {
+                var detalle = document.getElementById('horarioDetalle');
+                var flecha = document.getElementById('flechaHorario');
+                var btn = document.getElementById('toggleHorarioBtn');
+
+                detalle.classList.toggle('abierto');
+                flecha.classList.toggle('abierto');
+                btn.setAttribute('aria-expanded', detalle.classList.contains('abierto'));
+            }
+
+            var horarioBtn = document.getElementById('toggleHorarioBtn');
+            if (horarioBtn) {
+                horarioBtn.addEventListener('click', toggleHorario);
+                horarioBtn.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleHorario();
+                    }
+                });
+            }
+
+            // Toggle horario - Móvil
+            function toggleHorarioMovil() {
+                var detalle = document.getElementById('horarioDetalleMovil');
+                var flecha = document.getElementById('flechaHorarioMovil');
+                var btn = document.getElementById('toggleHorarioMovilBtn');
+
+                detalle.classList.toggle('abierto');
+                flecha.classList.toggle('abierto');
+                btn.setAttribute('aria-expanded', detalle.classList.contains('abierto'));
+            }
+
+            var horarioMovilBtn = document.getElementById('toggleHorarioMovilBtn');
+            if (horarioMovilBtn) {
+                horarioMovilBtn.addEventListener('click', toggleHorarioMovil);
+                horarioMovilBtn.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleHorarioMovil();
+                    }
+                });
+            }
+        });
+
+        // ==========================================
+        // EFECTO COLLAPSING HEADER (MÓVIL ≤ 900px)
+        // ==========================================
+
+        var headerImageWrapper = document.getElementById('headerImageWrapper');
+        var headerSpacer = document.getElementById('headerSpacer');
+
+        var isCollapsed = false;
+
+        function isMobileView() {
+            return window.innerWidth <= 900;
+        }
+
+        function toggleHeader(show) {
+            if (!isMobileView()) {
+                headerImageWrapper.classList.remove('collapsed');
+                headerSpacer.classList.remove('active');
+                isCollapsed = false;
+                return;
+            }
+
+            if (show) {
+                headerImageWrapper.classList.remove('collapsed');
+                headerSpacer.classList.remove('active');
+                isCollapsed = false;
+            } else {
+                headerImageWrapper.classList.add('collapsed');
+                headerSpacer.classList.add('active');
+                isCollapsed = true;
+            }
+        }
+
+        function handleScroll() {
+            if (!isMobileView()) {
+                toggleHeader(true);
+                return;
+            }
+
+            var currentScrollY = window.scrollY;
+            var imageHeight = headerImageWrapper.offsetHeight;
+            var triggerPoint = imageHeight * 0.5;
+
+            if (currentScrollY > triggerPoint && !isCollapsed) {
+                toggleHeader(false);
+            } else if (currentScrollY <= triggerPoint && isCollapsed) {
+                toggleHeader(true);
+            }
+        }
+
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    handleScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                if (isMobileView()) {
+                    toggleHeader(true);
+                } else {
+                    headerImageWrapper.classList.remove('collapsed');
+                    headerSpacer.classList.remove('active');
+                    isCollapsed = false;
+                }
+            }, 100);
+        });
+
+        window.addEventListener('resize', function() {
+            if (!isMobileView()) {
+                toggleHeader(true);
+            }
+        });
+
+        // ==========================================
+        // ESTADO DEL HORARIO EN VIVO
+        // ==========================================
+
+        function actualizarEstado() {
+            var ahora = new Date();
+            var hora = ahora.getHours();
+            var dia = ahora.getDay();
+
+            var estadoEl = document.getElementById('estado-horario');
+            var estadoElMovil = document.getElementById('estado-horario-movil');
+
+            var abierto = (dia >= 1 && dia <= 6) && (hora >= 9 && hora < 20);
+
+            var estadoHTML;
+
+            if (abierto) {
+                estadoHTML = '<span class="estado-color-abierto">● Abierto</span> <span class="estado-info">• Cierra a las 8 PM</span>';
+            } else {
+                if (dia === 0) {
+                    estadoHTML = '<span class="estado-color-cerrado">● Cerrado</span> <span class="estado-info">• Domingo</span>';
+                } else {
+                    estadoHTML = '<span class="estado-color-cerrado">● Cerrado</span> <span class="estado-info">• Abre mañana a las 9 AM</span>';
+                }
+            }
+
+            if (estadoEl) {
+                estadoEl.className = 'estado-horario';
+                estadoEl.innerHTML = estadoHTML;
+            }
+
+            if (estadoElMovil) {
+                estadoElMovil.className = 'estado-horario-movil';
+                estadoElMovil.innerHTML = estadoHTML;
+            }
+        }
+
+        actualizarEstado();
+        setInterval(actualizarEstado, 60000);
+
+        // ==========================================
+        // GALERÍA
+        // ==========================================
+
+        var indiceActual = 0;
+        var listaImagenes = [];
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var imagenesGaleria = document.querySelectorAll('.galeria-grid img');
+            listaImagenes = Array.from(imagenesGaleria).map(function(img) { return img.src; });
+        });
+
+        function abrirVisor(index) {
+            indiceActual = index;
+            var modal = document.getElementById('modal-galeria');
+            var imgModal = document.getElementById('img-modal-grande');
+            imgModal.src = listaImagenes[indiceActual];
+            modal.classList.add('mostrar-modal');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarVisor() {
+            document.getElementById('modal-galeria').classList.remove('mostrar-modal');
+            document.body.style.overflow = '';
+        }
+
+        function cambiarFoto(direccion) {
+            indiceActual += direccion;
+            if (indiceActual >= listaImagenes.length) indiceActual = 0;
+            if (indiceActual < 0) indiceActual = listaImagenes.length - 1;
+            document.getElementById('img-modal-grande').src = listaImagenes[indiceActual];
+        }
+
+        document.getElementById('modal-galeria').addEventListener('click', function(e) {
+            if (e.target === this) cerrarVisor();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            var modal = document.getElementById('modal-galeria');
+            if (modal.classList.contains('mostrar-modal')) {
+                if (e.key === "ArrowLeft") cambiarFoto(-1);
+                if (e.key === "ArrowRight") cambiarFoto(1);
+                if (e.key === "Escape") cerrarVisor();
+            }
+        });
+
+        // Swipe táctil para galería
+        document.addEventListener('DOMContentLoaded', function() {
+            var modalGaleria = document.getElementById('modal-galeria');
+            
+            if (modalGaleria) {
+                var touchStartX = 0;
+                var touchStartY = 0;
+                var isSwiping = false;
+                
+                modalGaleria.addEventListener('touchstart', function(e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                    touchStartY = e.changedTouches[0].screenY;
+                    isSwiping = true;
+                }, { passive: true });
+                
+                modalGaleria.addEventListener('touchmove', function(e) {
+                    if (!isSwiping) return;
+                    if (e.target.closest('.contenedor-modal-contenido')) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+                
+                modalGaleria.addEventListener('touchend', function(e) {
+                    if (!isSwiping) return;
+                    
+                    var touchEndX = e.changedTouches[0].screenX;
+                    var touchEndY = e.changedTouches[0].screenY;
+                    var diffX = touchStartX - touchEndX;
+                    var diffY = touchStartY - touchEndY;
+                    
+                    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                        if (diffX > 0) {
+                            if (typeof cambiarFoto === 'function') {
+                                cambiarFoto(1);
+                            }
+                        } else {
+                            if (typeof cambiarFoto === 'function') {
+                                cambiarFoto(-1);
+                            }
+                        }
+                    }
+                    
+                    isSwiping = false;
+                }, { passive: true });
+            }
+        });
+
+        // ==========================================
+        // MODALES: POLÍTICAS Y PRIVACIDAD
+        // ==========================================
+
+        function abrirModalPoliticas() {
+            var modal = document.getElementById('modal-politicas');
+            if (modal) {
+                modal.classList.add('mostrar-modal');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function cerrarModalPoliticas() {
+            var modal = document.getElementById('modal-politicas');
+            if (modal) {
+                modal.classList.remove('mostrar-modal');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function abrirModalPrivacidad() {
+            var modal = document.getElementById('modal-privacidad');
+            if (modal) {
+                modal.classList.add('mostrar-modal');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function cerrarModalPrivacidad() {
+            var modal = document.getElementById('modal-privacidad');
+            if (modal) {
+                modal.classList.remove('mostrar-modal');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Cerrar modales con click fuera
+        document.getElementById('modal-politicas').addEventListener('click', function(e) {
+            if (e.target === this) cerrarModalPoliticas();
+        });
+
+        document.getElementById('modal-privacidad').addEventListener('click', function(e) {
+            if (e.target === this) cerrarModalPrivacidad();
+        });
+
+        // Cerrar modales con ESC
+        document.addEventListener('keydown', function(e) {
+            var modalPoliticas = document.getElementById('modal-politicas');
+            var modalPrivacidad = document.getElementById('modal-privacidad');
+
+            if (e.key === 'Escape') {
+                if (modalPoliticas.classList.contains('mostrar-modal')) {
+                    cerrarModalPoliticas();
+                }
+                if (modalPrivacidad.classList.contains('mostrar-modal')) {
+                    cerrarModalPrivacidad();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

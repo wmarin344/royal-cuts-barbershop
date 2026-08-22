@@ -1,0 +1,1453 @@
+/* ======================================== 
+   INDEX.HTML
+   ======================================== */
+
+/* ========================================
+   NAVBAR - BLANCO CON BLUR
+   ======================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--color-separator);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+.navbar-inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(6px, 1vw + 2px, 12px);
+    padding: 0 clamp(10px, 2vw + 4px, 22px);
+    height: 44px;
+    max-width: 980px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* LOGO - SIEMPRE FIJO */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+}
+
+.nav-logo:hover {
+    opacity: 0.6;
+}
+
+.nav-logo img {
+    height: clamp(28px, 3vw + 12px, 36px);
+    width: clamp(28px, 3vw + 12px, 36px);
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* LINKS - SE DESPLAZAN HORIZONTALMENTE */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 0;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.nav-links::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-links li {
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li a {
+    color: var(--color-text-secondary) !important;
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: var(--fw-regular);
+    padding: 0 clamp(6px, 1vw + 2px, 14px);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    position: relative;
+    line-height: 1;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+    color: var(--color-text-primary) !important;
+    font-weight: var(--fw-semibold);
+}
+
+.nav-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 0;
+    height: 2.5px;
+    background: var(--color-text-primary);
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+/* TELÉFONO - SIEMPRE FIJO A LA DERECHA */
+.nav-contact {
+    display: flex;
+    align-items: center;
+    gap: clamp(4px, 0.5vw + 2px, 8px);
+    flex-shrink: 0;
+    margin-left: auto;
+    padding: 0 4px;
+    position: relative;
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+    font-weight: var(--fw-medium);
+    letter-spacing: -0.02em;
+}
+
+.nav-contact span {
+    white-space: nowrap;
+}
+
+.nav-contact svg {
+    width: clamp(14px, 1.2vw + 8px, 18px);
+    height: clamp(14px, 1.2vw + 8px, 18px);
+    fill: var(--color-text-primary);
+}
+
+/* Separador antes del teléfono */
+.nav-contact::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 20px;
+    background: var(--color-separator);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* En móviles el separador se muestra */
+@media (max-width: 768px) {
+    .nav-contact::before {
+        opacity: 1;
+    }
+}
+
+/* ======================================== 
+   HEADER IMAGEN
+   ======================================== */
+.header-image-wrapper {
+    width: 100%;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    background-color: var(--color-background);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-image-wrapper.collapsed {
+    max-height: 0 !important;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+}
+
+.header-img {
+    width: 100%;
+    height: auto;
+    max-height: clamp(200px, 40vw + 40px, 500px);
+    object-fit: cover;
+    display: block;
+    background-color: var(--color-background);
+}
+
+.linea-dorada {
+    border-bottom: 1px solid var(--color-separator);
+    width: 100%;
+}
+
+.header-spacer {
+    display: none;
+}
+
+.header-spacer.active {
+    display: block;
+}
+
+/* ======================================== 
+   CONTENEDOR PRINCIPAL
+   ======================================== */
+.contenedor-dos-columnas {
+    display: flex;
+    gap: clamp(16px, 2vw + 8px, 28px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(12px, 1.5vw + 4px, 20px) clamp(12px, 1.5vw + 4px, 20px) 0 clamp(12px, 1.5vw + 4px, 20px);
+}
+
+.columna-izquierda {
+    flex: 1;
+    min-width: 0;
+}
+
+.columna-derecha {
+    width: clamp(280px, 25vw + 40px, 340px);
+    flex-shrink: 0;
+}
+
+/* ======================================== 
+   TARJETA DE INFORMACIÓN MÓVIL
+   ======================================== */
+.tarjeta-info-movil {
+    display: none;
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 8px;
+    margin-top: 4px;
+}
+
+.tarjeta-info-inner-movil {
+     width: 100%;
+    background: var(--color-card);
+    padding: 16px;
+    border: 1px solid var(--color-separator);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+}
+
+.tarjeta-header-movil {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 1vw + 2px, 14px);
+    margin-bottom: 0;
+}
+
+.tarjeta-logo-movil {
+    width: clamp(48px, 5vw + 20px, 64px);
+    height: clamp(48px, 5vw + 20px, 64px);
+    object-fit: cover;
+    border: 1px solid var(--color-separator);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.tarjeta-titulo-movil {
+    font-size: var(--text-md);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-primary);
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+/* ======================================== 
+   ESTADO Y HORARIO (MÓVIL)
+   ======================================== */
+.info-estado-horario-movil {
+    width: 100%;
+    margin-top: 0;
+}
+
+.estado-horario-header-movil {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    padding: 0;
+    margin-top: 8px;
+}
+
+.estado-horario-movil {
+    font-size: var(--text-xs);
+    font-weight: var(--fw-medium);
+    margin: 0;
+    text-align: left;
+}
+
+.estado-color-abierto {
+    color: #1a7a1a;
+}
+
+.estado-color-cerrado {
+    color: #cc0000;
+}
+
+.estado-info {
+    color: var(--color-text-primary);
+}
+
+.flecha-horario-movil {
+    font-size: var(--text-xs);
+    transition: transform 0.2s ease;
+    display: inline-block;
+    transform: rotate(90deg);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.flecha-horario-movil.abierto {
+    transform: rotate(-90deg);
+}
+
+.horario-detalle-movil {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.2s ease;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.horario-detalle-movil.abierto {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 8px;
+}
+
+.horario-detalle-movil ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.horario-detalle-movil ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-separator);
+    font-size: var(--text-xs);
+    color: var(--color-text-primary);
+}
+
+.horario-detalle-movil ul li span {
+    font-size: var(--text-xs);
+}
+
+.horario-detalle-movil ul li:last-child {
+    border-bottom: none;
+}
+
+.horario-detalle-movil ul li.domingo span:last-child {
+    color: var(--color-system-red);
+}
+
+/* ======================================== 
+   POLÍTICAS MÓVIL
+   ======================================== */
+.politicas-movil {
+    padding: 8px 0;
+    display: none;
+    align-items: center;
+    flex-wrap: wrap;
+    border-top: none;
+    margin-top: 4px;
+    padding-left: 0;
+    gap: 4px;
+}
+
+.politicas-movil svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    margin-left: 0;
+    display: inline-block;
+    vertical-align: middle;
+    fill: var(--color-text-secondary);
+}
+
+.politicas-texto {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+}
+
+.politicas-link {
+    font-size: var(--text-xs);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: var(--fw-medium);
+    border-bottom: 1px solid var(--color-text-primary);
+}
+
+/* ======================================== 
+   TARJETA FIJA (ESCRITORIO)
+   ======================================== */
+.tarjeta-fija-barberia {
+    background: var(--color-card);
+    border: 1px solid var(--color-separator);
+    border-radius: var(--radius-card);
+    padding: clamp(16px, 2vw + 8px, 28px) clamp(14px, 1.5vw + 6px, 24px);
+    text-align: center;
+    position: sticky;
+    top: 68px;
+    box-shadow: var(--shadow-card);
+}
+
+.tarjeta-logo-centro {
+    width: clamp(80px, 8vw + 24px, 120px);
+    height: clamp(80px, 8vw + 24px, 120px);
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 auto clamp(10px, 1.2vw + 4px, 16px);
+    display: block;
+    border: 2px solid var(--color-separator);
+}
+
+.tarjeta-fija-barberia h2 {
+    font-size: var(--text-md);
+    font-weight: var(--fw-bold);
+    margin: 0 0 clamp(12px, 1.5vw + 4px, 18px) 0;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+}
+
+.btn-reservar-principal {
+    display: inline-block;
+    background: var(--color-text-primary);
+    color: #ffffff;
+    padding: clamp(10px, 1vw + 4px, 14px) clamp(20px, 2vw + 8px, 36px);
+    border-radius: var(--radius-button);
+    text-decoration: none;
+    font-weight: var(--fw-semibold);
+    font-size: var(--text-base);
+    transition: all 0.2s ease;
+    margin-bottom: clamp(12px, 1.5vw + 4px, 18px);
+    letter-spacing: -0.01em;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-reservar-principal:hover {
+    opacity: 0.8;
+    transform: scale(0.98);
+}
+
+.btn-reservar-principal:active {
+    transform: scale(0.95);
+}
+
+/* ======================================== 
+   ESTADO Y HORARIO (ESCRITORIO)
+   ======================================== */
+.info-estado-horario {
+    text-align: left;
+    padding: 0 4px;
+}
+
+.estado-horario-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    padding: 8px 0;
+}
+
+.estado-horario {
+    font-size: var(--text-xs);
+    font-weight: var(--fw-medium);
+    margin: 0;
+    text-align: center;
+}
+
+.estado-color-abierto {
+    color: #1a7a1a;
+}
+
+.estado-color-cerrado {
+    color: #cc0000;
+}
+
+.estado-info {
+    color: var(--color-text-primary);
+}
+
+.flecha-horario {
+    font-size: var(--text-xs);
+    transition: transform 0.2s ease;
+    display: inline-block;
+    transform: rotate(90deg);
+    color: var(--color-text-secondary);
+    flex-shrink: 0;
+}
+
+.flecha-horario.abierto {
+    transform: rotate(-90deg);
+}
+
+.horario-detalle {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease, margin 0.2s ease;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.horario-detalle.abierto {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 4px;
+}
+
+.horario-detalle ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.horario-detalle ul li {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: var(--text-xs);
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-separator);
+}
+
+.horario-detalle ul li span {
+    font-size: var(--text-xs);
+}
+
+.horario-detalle ul li:last-child {
+    border-bottom: none;
+}
+
+.horario-detalle ul li.domingo span:last-child {
+    color: var(--color-system-red);
+}
+
+/* ======================================== 
+   POLÍTICAS DESKTOP - CON SEPARADOR
+   ======================================== */
+.politicas-desktop {
+    padding: 16px 4px 4px 4px;
+    margin-top: 16px;
+    border-top: 1px solid var(--color-separator);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    text-align: center;
+}
+
+.politicas-desktop .politicas-texto {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+}
+
+/* En pantallas grandes, ajustamos para que quepa en 2 líneas */
+@media (min-width: 769px) {
+    .politicas-desktop {
+        gap: 2px;
+    }
+    
+    .politicas-desktop .politicas-texto {
+        font-size: clamp(9px, 0.6vw + 5px, 11px);
+    }
+    
+    .politicas-desktop .politicas-link {
+        font-size: clamp(9px, 0.6vw + 5px, 11px);
+    }
+}
+
+/* ======================================== 
+   CONTACTO LATERAL
+   ======================================== */
+.bloque-contacto-lateral {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-separator);
+}
+
+.titulo-lateral-contacto {
+    font-size: var(--text-sm);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 8px 0;
+    letter-spacing: -0.02em;
+}
+
+.telefono-lateral {
+    font-size: var(--text-base);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.telefono-lateral svg {
+    fill: var(--color-text-primary);
+}
+
+/* ======================================== 
+   SERVICIOS - HOVER BLANCO + BORDE + SOMBRA
+   ======================================== */
+.lista-servicios-enfilados {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tarjeta-servicio-linea {
+    display: flex;
+    align-items: center;
+    gap: clamp(10px, 1.2vw + 4px, 18px);
+    padding: clamp(10px, 1.2vw + 4px, 16px) clamp(12px, 1.5vw + 4px, 20px);
+    background: var(--color-background);
+    border: 1px solid var(--color-separator);
+    border-radius: var(--radius-card);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.tarjeta-servicio-linea:hover {
+    background: var(--color-card);
+    border-color: var(--color-text-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.servicio-mini-img {
+    width: clamp(36px, 3.5vw + 12px, 52px);
+    height: clamp(36px, 3.5vw + 12px, 52px);
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1px solid var(--color-separator);
+}
+
+.servicio-contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.servicio-contenido h3 {
+    font-size: var(--text-md);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.01em;
+}
+
+.servicio-meta-fila {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+}
+
+.duracion-texto {
+    color: var(--color-text-secondary);
+}
+
+.precio-texto {
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+}
+
+.separador {
+    color: var(--color-text-muted);
+}
+
+.detalles-toggle {
+    cursor: pointer;
+    color: var(--color-text-primary);
+    font-weight: var(--fw-medium);
+    font-size: var(--text-sm);
+    border-bottom: 1px solid var(--color-text-primary);
+}
+
+.detalles-contenido {
+     max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, margin 0.3s ease, padding-top 0.3s ease, border-top 0.3s ease;
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 1px solid transparent;
+}
+
+.detalles-contenido.abierto {
+     max-height: 200px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-separator);
+}
+
+.detalles-contenido p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.btn-reserva-linea {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 8px;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+    font-weight: var(--fw-light);
+}
+
+.btn-reserva-linea:hover {
+    color: var(--color-text-primary);
+    transform: translateX(4px);
+}
+
+/* ======================================== 
+   GALERÍA
+   ======================================== */
+.galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(8px, 1vw + 2px, 14px);
+}
+
+.galeria-item {
+    background-color: var(--color-background);
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--color-separator);
+    border-radius: var(--radius-card);
+    cursor: pointer;
+    padding: 0;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+
+.galeria-item:hover {
+    transform: scale(1.02);
+    border-color: var(--color-text-primary);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* ======================================== 
+   EQUIPO / BARBEROS - MISMO HOVER QUE SERVICIOS (SIN OPACIDAD)
+   ======================================== */
+.lista-barberos-enfilados {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.enlace-tarjeta-barbero-linea {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 1 !important;
+}
+
+.enlace-tarjeta-barbero-linea:hover {
+    opacity: 1 !important;
+}
+
+.tarjeta-barbero-linea {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 1.2vw + 4px, 20px);
+    padding: clamp(12px, 1.5vw + 4px, 18px);
+    background: var(--color-background);
+    border: 1px solid var(--color-separator);
+    border-radius: var(--radius-card);
+    transition: all 0.2s ease;
+}
+
+.tarjeta-barbero-linea:hover {
+    background: var(--color-card);
+    border-color: var(--color-text-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.barbero-avatar {
+    width: clamp(48px, 5vw + 16px, 72px);
+    height: clamp(48px, 5vw + 16px, 72px);
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid var(--color-separator);
+}
+
+.barbero-datos {
+    flex: 1;
+    min-width: 0;
+}
+
+.barbero-datos h4 {
+    font-size: var(--text-md);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    margin: 0 0 2px 0;
+    letter-spacing: -0.01em;
+}
+
+.barbero-puesto {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 4px 0;
+}
+
+.barbero-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+}
+
+.mini-btn-barbero {
+    font-size: var(--text-sm);
+    font-weight: var(--fw-medium);
+    color: var(--color-text-primary);
+    border-bottom: 1px solid var(--color-text-primary);
+}
+
+/* ======================================== 
+   NOSOTROS
+   ======================================== */
+.nosotros-caja p {
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+/* ======================================== 
+   BOTÓN FLOTANTE RESERVAR
+   ======================================== */
+.fab-reservar {
+    display: none;
+    position: fixed;
+    bottom: clamp(12px, 1.5vw + 6px, 24px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-text-primary);
+    color: #ffffff;
+    padding: clamp(10px, 1vw + 4px, 16px) clamp(16px, 2vw + 8px, 32px);
+    border-radius: var(--radius-button);
+    text-decoration: none;
+    font-weight: var(--fw-semibold);
+    font-size: var(--text-base);
+    z-index: 9998;
+    box-shadow: var(--shadow-button);
+    transition: all 0.2s ease;
+    letter-spacing: -0.01em;
+    border: none;
+    cursor: pointer;
+    min-width: clamp(80px, 10vw + 30px, 140px);
+}
+
+.fab-reservar:hover {
+    opacity: 0.8;
+    transform: translateX(-50%) scale(0.98);
+}
+
+.fab-reservar:active {
+    transform: translateX(-50%) scale(0.95);
+}
+
+/* ======================================== 
+   FOOTER
+   ======================================== */
+.footer-completo {
+    background: var(--color-card);
+    padding: clamp(24px, 3vw + 12px, 48px) clamp(12px, 1.5vw + 6px, 24px);
+    text-align: center;
+    border-top: 1px solid var(--color-separator);
+    margin-top: clamp(12px, 1.5vw + 4px, 20px);
+    box-shadow: var(--shadow-card);
+}
+
+.titulo-contacto-blanco {
+    font-size: var(--text-xl);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 clamp(12px, 1.5vw + 4px, 18px) 0;
+    letter-spacing: -0.02em;
+}
+
+.redes-sociales {
+    display: flex;
+    justify-content: center;
+    gap: clamp(14px, 1.5vw + 6px, 24px);
+    margin-bottom: clamp(12px, 1.5vw + 4px, 18px);
+}
+
+.redes-sociales a {
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+}
+
+.redes-sociales a:hover {
+    color: var(--color-text-primary);
+    transform: scale(1.05);
+}
+
+.redes-sociales svg {
+    width: clamp(24px, 2.5vw + 8px, 32px);
+    height: clamp(24px, 2.5vw + 8px, 32px);
+}
+
+.footer-completo p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.footer-privacidad-link {
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-weight: var(--fw-medium);
+    border-bottom: 1px solid var(--color-text-primary);
+    font-size: var(--text-sm);
+}
+
+/* ======================================== 
+   POLÍTICAS - SCROLL EN TODOS LOS DISPOSITIVOS
+   ======================================== */
+
+/* Forzar scroll en el modal */
+#modal-politicas {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* Bordes redondeados en el contenedor */
+#modal-politicas .contenedor-modal-contenido {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+}
+
+/* Scroll en el contenido interior - TODOS LOS DISPOSITIVOS */
+#modal-politicas .modal-texto-inner-scroll {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: 60vh !important;
+    border-radius: 0 !important;
+    background: var(--color-card);
+    padding: clamp(20px, 2.5vw + 8px, 36px);
+    width: 100%;
+    box-shadow: var(--shadow-card);
+}
+
+/* Tablets (incluyendo iPad Mini) */
+@media (max-width: 820px) {
+    #modal-politicas .modal-texto-inner-scroll {
+        max-height: 55vh !important;
+        min-height: 40vh !important;
+    }
+}
+
+/* Móviles grandes */
+@media (max-width: 600px) {
+    #modal-politicas .modal-texto-inner-scroll {
+        max-height: 50vh !important;
+        min-height: 35vh !important;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 400px) {
+    #modal-politicas .modal-texto-inner-scroll {
+        max-height: 45vh !important;
+        min-height: 30vh !important;
+    }
+}
+
+/* ======================================== 
+   AVISO DE PRIVACIDAD - SCROLL EN TODOS LOS DISPOSITIVOS
+   ======================================== */
+
+/* Forzar scroll en el modal */
+#modal-privacidad {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* Bordes redondeados en el contenedor */
+#modal-privacidad .contenedor-modal-contenido {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+}
+
+/* Scroll en el contenido interior - TODOS LOS DISPOSITIVOS */
+#modal-privacidad .modal-texto-inner-scroll {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    max-height: 60vh !important;
+    border-radius: 0 !important;
+    background: var(--color-card);
+    padding: clamp(20px, 2.5vw + 8px, 36px);
+    width: 100%;
+    box-shadow: var(--shadow-card);
+}
+
+/* Tablets (incluyendo iPad Mini) */
+@media (max-width: 820px) {
+    #modal-privacidad .modal-texto-inner-scroll {
+        max-height: 55vh !important;
+        min-height: 40vh !important;
+    }
+}
+
+/* Móviles grandes */
+@media (max-width: 600px) {
+    #modal-privacidad .modal-texto-inner-scroll {
+        max-height: 50vh !important;
+        min-height: 35vh !important;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 400px) {
+    #modal-privacidad .modal-texto-inner-scroll {
+        max-height: 45vh !important;
+        min-height: 30vh !important;
+    }
+}
+
+/* ======================================== 
+   VISOR GALERÍA - MODALES CON SCROLL
+   ======================================== */
+.modal-visor {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-visor.mostrar-modal {
+    display: flex;
+}
+
+.cerrar-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 36px;
+    color: #ffffff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 100000;
+    font-weight: var(--fw-light);
+}
+
+.cerrar-modal:hover {
+    opacity: 0.6;
+}
+
+.contenedor-modal-contenido {
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-modal-contenido img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: var(--radius-card);
+}
+
+.modal-contenido-texto {
+    max-width: 600px;
+    max-height: 85vh;
+    width: 100%;
+}
+
+.modal-texto-inner-scroll {
+    background: var(--color-card);
+    border-radius: var(--radius-card);
+    padding: clamp(20px, 2.5vw + 8px, 36px);
+    max-height: 85vh;
+    overflow-y: auto;
+    width: 100%;
+    box-shadow: var(--shadow-card);
+    -webkit-overflow-scrolling: touch;
+}
+
+.modal-titulo {
+    font-size: var(--text-xl);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-primary);
+    margin: 0 0 16px 0;
+    letter-spacing: -0.02em;
+}
+
+.modal-contenido-scroll {
+    overflow-y: auto;
+}
+
+.modal-lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-lista li {
+    font-size: var(--text-base);
+    color: var(--color-text-primary);
+    padding: 8px 0;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--color-separator);
+}
+
+.modal-lista li:last-child {
+    border-bottom: none;
+}
+
+.flecha-visor {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    border: none;
+    font-size: 22px;
+    padding: 8px 12px;
+    cursor: pointer;
+    z-index: 100000;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.flecha-visor:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.flecha-visor.prev {
+    left: 16px;
+}
+
+.flecha-visor.next {
+    right: 16px;
+}
+
+/* ======================================== 
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .contenedor-dos-columnas {
+        flex-direction: column;
+        gap: clamp(10px, 1.5vw + 4px, 16px);
+        padding: clamp(8px, 1vw + 4px, 14px);
+    }
+
+    .columna-derecha {
+        display: none;
+    }
+
+    .tarjeta-info-movil {
+        display: block;
+    }
+
+    .galeria-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: clamp(6px, 0.8vw + 2px, 10px);
+    }
+
+    .fab-reservar {
+        display: block;
+        padding: clamp(10px, 1vw + 4px, 14px) clamp(14px, 1.5vw + 6px, 24px);
+        min-width: clamp(90px, 12vw + 20px, 130px);
+        bottom: clamp(12px, 1.5vw + 4px, 18px);
+    }
+
+    .tarjeta-barbero-linea {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: clamp(12px, 1.5vw + 4px, 18px);
+    }
+
+    .barbero-datos {
+        text-align: center;
+    }
+
+    .footer-completo {
+        padding-bottom: calc(48px + 70px);
+    }
+}
+
+@media (max-width: 480px) {
+    .galeria-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(6px, 1vw + 2px, 10px);
+    }
+
+    .tarjeta-servicio-linea {
+        padding: clamp(6px, 0.8vw + 2px, 10px);
+        gap: clamp(6px, 0.8vw + 2px, 10px);
+    }
+
+    .servicio-mini-img {
+        width: clamp(30px, 4vw + 10px, 40px);
+        height: clamp(30px, 4vw + 10px, 40px);
+    }
+
+    .btn-reserva-linea {
+        font-size: var(--text-md);
+    }
+
+    .barbero-avatar {
+        width: clamp(44px, 5vw + 16px, 60px);
+        height: clamp(44px, 5vw + 16px, 60px);
+    }
+
+    .fab-reservar {
+        padding: clamp(8px, 0.8vw + 4px, 12px) clamp(12px, 1.5vw + 4px, 18px);
+        min-width: clamp(70px, 10vw + 20px, 100px);
+        font-size: var(--text-sm);
+    }
+
+    .footer-completo {
+        padding: clamp(16px, 2vw + 6px, 28px) clamp(10px, 1vw + 4px, 16px);
+        padding-bottom: calc(48px + 60px);
+    }
+}
+
+@media (max-width: 400px) {
+    .header-img {
+        max-height: 150px;
+    }
+
+    .tarjeta-info-movil {
+        padding: 0;
+    }
+
+    .tarjeta-logo-movil {
+        width: clamp(28px, 4vw + 10px, 36px);
+        height: clamp(28px, 4vw + 10px, 36px);
+    }
+
+    .tarjeta-titulo-movil {
+        font-size: var(--text-sm);
+    }
+
+    .servicio-mini-img {
+        width: clamp(26px, 3vw + 10px, 34px);
+        height: clamp(26px, 3vw + 10px, 34px);
+    }
+
+    .barbero-avatar {
+        width: clamp(40px, 4vw + 14px, 52px);
+        height: clamp(40px, 4vw + 14px, 52px);
+    }
+
+    .fab-reservar {
+        padding: 6px 10px;
+        min-width: 60px;
+        font-size: var(--text-xs);
+        bottom: clamp(6px, 0.8vw + 2px, 10px);
+    }
+
+    .nav-contact span {
+        display: none;
+    }
+}
+
+/* ======================================== 
+   MOSTRAR POLÍTICAS EN MÓVIL - SIN LÍNEA
+   ======================================== */
+@media (max-width: 768px) {
+    .politicas-movil {
+        display: flex !important;
+        border-top: none;
+        margin-top: 8px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+}
+
+/* ======================================== 
+   FORZAR TAMAÑO PEQUEÑO EN EL ESTADO - DEFINITIVO
+   ======================================== */
+#estado-horario,
+#estado-horario-movil {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+}
+
+#estado-horario span,
+#estado-horario-movil span {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+}
+
+/* Colores */
+#estado-horario .estado-color-abierto,
+#estado-horario-movil .estado-color-abierto {
+    color: #1a7a1a !important;
+}
+
+#estado-horario .estado-color-cerrado,
+#estado-horario-movil .estado-color-cerrado {
+    color: #cc0000 !important;
+}
+
+#estado-horario .estado-info,
+#estado-horario-movil .estado-info {
+    color: #1c1c1e !important;
+}
+/* ======================================== 
+   GALERÍA - FLECHAS DE NAVEGACIÓN (TODOS LOS DISPOSITIVOS)
+   ======================================== */
+
+.flecha-visor {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-size: 28px;
+    padding: 16px 20px;
+    cursor: pointer;
+    z-index: 100000;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    font-weight: var(--fw-light);
+    user-select: none;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.flecha-visor:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.flecha-visor:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.flecha-visor.prev {
+    left: 20px;
+}
+
+.flecha-visor.next {
+    right: 20px;
+}
+
+/* Tablets y móviles grandes */
+@media (max-width: 900px) {
+    .flecha-visor {
+        width: 50px;
+        height: 50px;
+        font-size: 24px;
+        padding: 12px 16px;
+    }
+    .flecha-visor.prev {
+        left: 14px;
+    }
+    .flecha-visor.next {
+        right: 14px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 600px) {
+    .flecha-visor {
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        padding: 10px 14px;
+        border-width: 1.5px;
+    }
+    .flecha-visor.prev {
+        left: 10px;
+    }
+    .flecha-visor.next {
+        right: 10px;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 400px) {
+    .flecha-visor {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        padding: 6px 10px;
+        border-width: 1px;
+    }
+    .flecha-visor.prev {
+        left: 6px;
+    }
+    .flecha-visor.next {
+        right: 6px;
+    }
+}

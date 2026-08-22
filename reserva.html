@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservar Cita · Royal Cuts Barbershop</title>
+    <meta name="description" content="Reserva tu cita en Royal Cuts Barbershop - Elige servicio, barbero y horario.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/logo.jpeg" type="image/jpeg">
+    
+    <!-- Estilos principales -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reservaStyle.css">
+    
+</head>
+<body>
+
+    <!-- ===== HEADER SUPERIOR ===== -->
+    <header class="reserva-header-superior">
+        <button class="btn-regresar-simple" id="btnRegresarSimple" aria-label="Regresar">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="logo-area">
+            <img src="assets/logo.jpeg" alt="Royal Cuts - Logo" loading="lazy">
+            <span>Royal Cuts Barbershop</span>
+        </div>
+    </header>
+
+    <!-- ===== CONTENEDOR DE DOS COLUMNAS ===== -->
+    <div class="contenedor-dos-columnas reserva-contenedor-dos-columnas">
+        
+        <!-- ===== COLUMNA IZQUIERDA ===== -->
+        <div class="columna-izquierda">
+            
+            <!-- PASO 1: SERVICIO -->
+            <div id="paso-servicio" class="paso-contenido" style="display:block;">
+                <div class="paso-contexto" id="contextoServicio"></div>
+                <section class="seccion-bloque selector-servicios">
+                    <h2 class="titulo-seccion">Elige tu servicio</h2>
+                    <div class="lista-servicios-enfilados" id="listaServiciosReserva"></div>
+                </section>
+                <div class="paso-navegacion">
+                    <button class="btn-atras" id="btnAtrasServicio" style="visibility:hidden;">Atras</button>
+                    <button class="btn-siguiente" id="btnSiguienteServicio">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- PASO 2: BARBERO -->
+            <div id="paso-barbero" class="paso-contenido" style="display:none;">
+                <div class="paso-contexto" id="contextoBarbero"></div>
+                <section class="seccion-bloque">
+                    <h2 class="titulo-seccion">Elige a tu barbero</h2>
+                    <div class="selector-barberos" id="listaBarberosReserva"></div>
+                </section>
+                <div class="paso-navegacion">
+                    <button class="btn-atras" id="btnAtrasBarbero">Atras</button>
+                    <button class="btn-siguiente" id="btnSiguienteBarbero">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- PASO 3: CALENDARIO -->
+            <div id="paso-calendario" class="paso-contenido" style="display:none;">
+                <div class="paso-contexto" id="contextoCalendario"></div>
+                <section class="seccion-bloque">
+                    <h2 class="titulo-seccion">Selecciona fecha y hora</h2>
+                    
+                    <!-- Indicador de carga -->
+                    <div id="calendarioCargando" style="display:none; text-align:center; padding:30px;">
+                        <div style="display:inline-block; width:40px; height:40px; border:4px solid #f3f3f3; border-top:4px solid #c9a84c; border-radius:50%; animation: spin 1s linear infinite;"></div>
+                        <p style="margin-top:10px; color:#666;">Cargando disponibilidad...</p>
+                    </div>
+                    
+                    <div class="calendario-profesional" id="calendarioContainer">
+                        <div class="cal-header">
+                            <button class="cal-nav-btn" id="calMesAnterior">‹</button>
+                            <div class="cal-header-center">
+                                <span class="cal-mes-anio" id="calMesTitulo">Enero 2026</span>
+                                <button class="cal-hoy-btn" id="calHoyBtn">Hoy</button>
+                            </div>
+                            <button class="cal-nav-btn" id="calMesSiguiente">›</button>
+                        </div>
+                        
+                        <div class="cal-dias-semana">
+                            <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+                        </div>
+                        
+                        <div class="cal-grid" id="calGrid"></div>
+                        
+                        <div class="cal-horas-section" id="calHorasSection" style="display:none;">
+                            <div class="cal-fecha-seleccionada">
+                                <span class="cal-fecha-dia" id="calFechaDia">15</span>
+                                <div class="cal-fecha-texto">
+                                    <span class="cal-fecha-dia-semana" id="calFechaDiaSemana">Lunes</span>
+                                    <span class="cal-fecha-mes" id="calFechaMes">Enero</span>
+                                </div>
+                            </div>
+                            
+                            <div class="cal-horas-container">
+                                <p class="cal-horas-titulo">Horas disponibles</p>
+                                <div class="cal-horas-grid" id="calHorasGrid"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="cal-sin-seleccion" id="calSinSeleccion">
+                            <p>Selecciona un día disponible</p>
+                            <span class="cal-sin-sub">Horario: 9:00 AM - 8:00 PM (Lun-Sáb)</span>
+                        </div>
+                    </div>
+                </section>
+                <div class="paso-navegacion">
+                    <button class="btn-atras" id="btnAtrasCalendario">Atras</button>
+                    <button class="btn-siguiente" id="btnSiguienteCalendario">Siguiente</button>
+                </div>
+            </div>
+
+            <!-- PASO 4: DATOS -->
+            <div id="paso-datos" class="paso-contenido" style="display:none;">
+                <div class="paso-contexto" id="contextoDatos"></div>
+                <section class="seccion-bloque">
+                    <h2 class="titulo-seccion">Tus datos</h2>
+                    <form class="form-datos-cliente" id="formDatosCliente" novalidate>
+                        <div class="grupo-input">
+                            <label for="cliente-nombre">Nombre completo *</label>
+                            <input type="text" id="cliente-nombre" placeholder="Ej: Juan Pérez" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="cliente-email">Correo electrónico *</label>
+                            <input type="email" id="cliente-email" placeholder="Ej: juan@email.com" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="cliente-telefono">Teléfono *</label>
+                            <input type="tel" id="cliente-telefono" placeholder="999 123 4567" required>
+                        </div>
+                        <div class="grupo-input">
+                            <label for="cliente-notas">Notas (opcional)</label>
+                            <textarea id="cliente-notas" placeholder="Algo que debamos saber?"></textarea>
+                        </div>
+                    </form>
+                </section>
+                <div class="paso-navegacion">
+                    <button class="btn-atras" id="btnAtrasDatos">Atras</button>
+                    <button class="btn-siguiente" id="btnSiguienteDatos">Agendar cita</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== COLUMNA DERECHA (RESUMEN) ===== -->
+        <div class="columna-derecha columna-derecha-reserva">
+            <div class="tarjeta-fija-barberia tarjeta-resumen">
+                <img src="assets/logo.jpeg" alt="Logo Royal Cuts" class="tarjeta-logo-centro" loading="lazy">
+                <h2>Royal Cuts Barbershop</h2>
+                
+                <div class="resumen-vivo" id="resumenVivoDesktop">
+                    <h3 class="resumen-titulo-desktop">Resumen</h3>
+                    
+                    <div class="resumen-vacio" id="resumenVacioDesktop">
+                        <p>Selecciona un servicio para comenzar</p>
+                    </div>
+                    <div class="resumen-contenido" id="resumenContenidoDesktop" style="display: none;">
+                        <div class="resumen-item">
+                            <span class="resumen-etiqueta">Servicio</span>
+                            <span class="resumen-valor" id="resumenServicioDesktop">—</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-etiqueta">Duración</span>
+                            <span class="resumen-valor" id="resumenDuracionDesktop">—</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-etiqueta">Precio</span>
+                            <span class="resumen-valor" id="resumenPrecioDesktop">—</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-etiqueta">Barbero</span>
+                            <span class="resumen-valor" id="resumenBarberoDesktop">—</span>
+                        </div>
+                        <div class="resumen-item">
+                            <span class="resumen-etiqueta">Fecha y Hora</span>
+                            <span class="resumen-valor" id="resumenFechaHoraDesktop">—</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="total-pagar-wrapper" id="totalPagarWrapper">
+                    <span class="total-pagar-label">Total a pagar</span>
+                    <div class="total-pagar-precio" id="totalPagarPrecio">$0 <span>MXN</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== BOTONES FLOTANTES ===== -->
+    <div class="botones-flotantes-wrapper">
+        <button class="fab-atras" id="fabAtras" style="display:none;">Volver</button>
+        <button class="fab-siguiente" id="fabSiguiente" disabled>Siguiente</button>
+    </div>
+
+    <!-- ===== BARRA FIJA INFERIOR MÓVIL ===== -->
+    <div class="mobile-resumen-wrapper" id="mobileResumenWrapper">
+        <div class="mobile-resumen-toggle" id="mobileResumenToggle">
+            <div class="toggle-row-1">
+                <div class="toggle-left">
+                    <span class="toggle-label">Total a pagar</span>
+                    <span class="toggle-flecha" id="mobileToggleFlecha">❯</span>
+                </div>
+                <span class="toggle-precio" id="mobileTogglePrecio">$0 <span>MXN</span></span>
+            </div>
+            <div class="toggle-preview" id="mobileTogglePreview">
+                <span class="preview-text" id="mobilePreviewTexto">Selecciona un servicio para comenzar</span>
+            </div>
+        </div>
+
+        <div class="mobile-resumen-contenido" id="mobileResumenContenido">
+            <div class="mobile-resumen-inner">
+                <div class="mobile-resumen-titulo-wrapper">
+                    <span class="mobile-resumen-titulo">Resumen</span>
+                </div>
+                <div class="mobile-resumen-vacio" id="mobileResumenVacio">
+                    Selecciona un servicio para comenzar
+                </div>
+                <div id="mobileResumenDatos" style="display: none;">
+                    <div class="mobile-resumen-item con-linea">
+                        <span class="label">Servicio</span>
+                        <span class="value" id="mobileResumenServicio">—</span>
+                    </div>
+                    <div class="mobile-resumen-item con-linea">
+                        <span class="label">Duración</span>
+                        <span class="value" id="mobileResumenDuracion">—</span>
+                    </div>
+                    <div class="mobile-resumen-item con-linea">
+                        <span class="label">Precio</span>
+                        <span class="value" id="mobileResumenPrecio">—</span>
+                    </div>
+                    <div class="mobile-resumen-item con-linea">
+                        <span class="label">Barbero</span>
+                        <span class="value" id="mobileResumenBarbero">—</span>
+                    </div>
+                    <div class="mobile-resumen-item">
+                        <span class="label">Fecha y Hora</span>
+                        <span class="value" id="mobileResumenFechaHora">—</span>
+                    </div>
+                    <div class="mobile-resumen-item total">
+                        <span class="label">Total a pagar</span>
+                        <span class="value" id="mobileResumenTotal">$0 <span>MXN</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="module">
+        // ==========================================
+        // CONFIGURACIÓN DE FIREBASE
+        // ==========================================
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCrWsY8nz1MjndaBsLAWFbNlLMttuN6HAM",
+            authDomain: "royalcutscalendario.firebaseapp.com",
+            projectId: "royalcutscalendario",
+            storageBucket: "royalcutscalendario.firebasestorage.app",
+            messagingSenderId: "174922243718",
+            appId: "1:174922243718:web:66bb28577e20080a047b07"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const citasCollection = collection(db, "citas");
+
+        // ==========================================
+        // CONFIGURACIÓN DEL CALENDARIO
+        // ==========================================
+        const HORA_APERTURA = 9;
+        const HORA_CIERRE = 20;
+        const DIAS_CERRADOS = [0];
+
+        function generarTodasLasHoras() {
+            const horas = [];
+            for (let h = HORA_APERTURA; h < HORA_CIERRE; h++) {
+                const hora12 = h > 12 ? h - 12 : h;
+                const ampm = h >= 12 ? 'PM' : 'AM';
+                horas.push(`${hora12}:00 ${ampm}`);
+                horas.push(`${hora12}:30 ${ampm}`);
+            }
+            return horas;
+        }
+
+        const TODAS_LAS_HORAS = generarTodasLasHoras();
+
+        function formatearFecha(fecha) {
+            const year = fecha.getFullYear();
+            const month = String(fecha.getMonth() + 1).padStart(2, '0');
+            const day = String(fecha.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function diaEstaAbierto(fecha) {
+            return !DIAS_CERRADOS.includes(fecha.getDay());
+        }
+
+        // ==========================================
+        // FUNCIONES PARA CONSULTAR FIREBASE
+        // ==========================================
+        let cacheDisponibilidad = {};
+
+        async function obtenerHorasOcupadas(fecha) {
+            const fechaStr = formatearFecha(fecha);
+            if (cacheDisponibilidad[fechaStr]) {
+                return cacheDisponibilidad[fechaStr];
+            }
+            
+            try {
+                const q = query(citasCollection, where("fecha", "==", fechaStr));
+                const querySnapshot = await getDocs(q);
+                const horas = [];
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.estado !== 'cancelada') {
+                        horas.push(data.hora);
+                    }
+                });
+                cacheDisponibilidad[fechaStr] = horas;
+                return horas;
+            } catch (error) {
+                return [];
+            }
+        }
+
+        async function obtenerDisponibilidadMes(anio, mes) {
+            const inicio = new Date(anio, mes, 1);
+            const fin = new Date(anio, mes + 1, 0);
+            const dias = [];
+            
+            for (let d = 1; d <= fin.getDate(); d++) {
+                const fecha = new Date(anio, mes, d);
+                dias.push(fecha);
+            }
+            
+            const inicioStr = formatearFecha(inicio);
+            const finStr = formatearFecha(fin);
+            
+            try {
+                const q = query(citasCollection, where("fecha", ">=", inicioStr), where("fecha", "<=", finStr));
+                const querySnapshot = await getDocs(q);
+                
+                const citasPorFecha = {};
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    if (data.estado !== 'cancelada') {
+                        if (!citasPorFecha[data.fecha]) {
+                            citasPorFecha[data.fecha] = [];
+                        }
+                        citasPorFecha[data.fecha].push(data.hora);
+                    }
+                });
+                
+                dias.forEach(fecha => {
+                    const fechaStr = formatearFecha(fecha);
+                    if (citasPorFecha[fechaStr]) {
+                        cacheDisponibilidad[fechaStr] = citasPorFecha[fechaStr];
+                    } else {
+                        cacheDisponibilidad[fechaStr] = [];
+                    }
+                });
+                
+                return true;
+            } catch (error) {
+                return false;
+            }
+        }
+
+        // ==========================================
+        // FUNCIONES PARA VERIFICAR HORAS PASADAS
+        // ==========================================
+        function esHoraPasada(horaStr, fecha) {
+            const hoy = new Date();
+            const esHoy = fecha.getDate() === hoy.getDate() && 
+                          fecha.getMonth() === hoy.getMonth() && 
+                          fecha.getFullYear() === hoy.getFullYear();
+            
+            if (!esHoy) return false;
+            
+            const partes = horaStr.split(' ');
+            const horaParte = partes[0];
+            const ampm = partes[1];
+            let horas = parseInt(horaParte.split(':')[0]);
+            const minutos = parseInt(horaParte.split(':')[1]);
+            
+            if (ampm === 'PM' && horas !== 12) horas += 12;
+            if (ampm === 'AM' && horas === 12) horas = 0;
+            
+            const horaActual = hoy.getHours();
+            const minutosActual = hoy.getMinutes();
+            
+            if (horas < horaActual) return true;
+            if (horas === horaActual && minutos < minutosActual) return true;
+            return false;
+        }
+
+        function tieneHorasDisponibles(fecha, ocupadas) {
+            const hoy = new Date();
+            const esHoy = fecha.getDate() === hoy.getDate() && 
+                          fecha.getMonth() === hoy.getMonth() && 
+                          fecha.getFullYear() === hoy.getFullYear();
+            
+            let disponibles = 0;
+            
+            TODAS_LAS_HORAS.forEach(hora => {
+                const ocupada = ocupadas.includes(hora);
+                const pasada = esHoy ? esHoraPasada(hora, fecha) : false;
+                
+                if (!ocupada && !pasada) {
+                    disponibles++;
+                }
+            });
+            
+            return disponibles > 0;
+        }
+
+        async function diaTieneDisponibilidad(fecha) {
+            if (!diaEstaAbierto(fecha)) return false;
+            
+            const ocupadas = await obtenerHorasOcupadas(fecha);
+            return tieneHorasDisponibles(fecha, ocupadas);
+        }
+
+        async function horaEstaOcupada(fecha, hora) {
+            const ocupadas = await obtenerHorasOcupadas(fecha);
+            const pasada = esHoraPasada(hora, fecha);
+            return ocupadas.includes(hora) || pasada;
+        }
+
+        // ==========================================
+        // GENERAR ID ÚNICO PARA LA CITA
+        // ==========================================
+        function generarCitaId() {
+            const hoy = new Date();
+            const fecha = `${hoy.getFullYear()}-${String(hoy.getMonth()+1).padStart(2,'0')}-${String(hoy.getDate()).padStart(2,'0')}`;
+            const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+            return `CIT-${fecha}-${random}`;
+        }
+
+        // ==========================================
+        // FUNCIONES DE LIMPIEZA PARA EMAIL
+        // ==========================================
+        function limpiarTexto(texto) {
+            if (!texto) return 'No especificado';
+            texto = String(texto);
+            texto = texto.replace(/<[^>]*>/g, '');
+            texto = texto.replace(/["']/g, '');
+            texto = texto.replace(/[&<>]/g, '');
+            texto = texto.replace(/[\n\r]+/g, ' ');
+            texto = texto.replace(/\s+/g, ' ');
+            texto = texto.substring(0, 200);
+            return texto.trim();
+        }
+
+        function limpiarCitaId(id) {
+            if (!id) return 'No especificado';
+            return String(id).replace(/-/g, ' ');
+        }
+
+        // ==========================================
+        // GUARDAR CITA EN FIREBASE
+        // ==========================================
+        async function guardarCita(fecha, hora, datosCliente, datosCita) {
+            const fechaStr = formatearFecha(fecha);
+            const citaId = generarCitaId();
+            
+            try {
+                await addDoc(citasCollection, {
+                    citaId: citaId,
+                    fecha: fechaStr,
+                    hora: hora,
+                    fechaHora: datosCita.fechaHora,
+                    estado: 'activa',
+                    fechaCreacion: new Date().toISOString(),
+                    cliente: datosCliente.nombre,
+                    email: datosCliente.email,
+                    telefono: datosCliente.telefono,
+                    notas: datosCliente.notas || '',
+                    servicio: datosCita.servicio,
+                    servicioId: estado.servicio ? estado.servicio.id : null,
+                    duracion: datosCita.duracion,
+                    precio: datosCita.precio,
+                    barbero: datosCita.barbero,
+                    barberoId: estado.barbero ? estado.barbero.id : null
+                });
+                
+                delete cacheDisponibilidad[fechaStr];
+                return { success: true, citaId: citaId };
+            } catch (error) {
+                return { success: false, error: error };
+            }
+        }
+
+        // ==========================================
+        // ENVIAR CORREO DE CONFIRMACIÓN
+        // ==========================================
+        function enviarCorreoConfirmacion(datosCliente, datosCita) {
+            const serviceID = "service_p8cm46v";
+            const templateClienteID = "template_o80o77n";
+            const templateAdminID = "template_dseqyuj";
+
+            const paramsCliente = {
+                to_name: datosCliente.nombre,
+                to_email: datosCliente.email,
+                user_phone: datosCliente.telefono,
+                user_notes: datosCliente.notas || "Sin notas adicionales",
+                service_name: datosCita.servicio,
+                service_duration: datosCita.duracion,
+                service_price: datosCita.precio,
+                barber_name: datosCita.barbero,
+                appointment_date: datosCita.fechaHora,
+                barbershop_name: "Royal Cuts Barbershop",
+                barbershop_address: "Calle Principal #123, Ciudad",
+                barbershop_phone: "+52 999 918 1862",
+                cita_id: datosCita.citaId
+            };
+
+            const paramsAdmin = {
+                titulo: 'Nueva cita registrada',
+                mensaje: 'Nueva cita registrada en el sistema.',
+                mensajeInfo: 'Prepare la silla y los utensilios para la llegada del cliente.',
+                cliente_nombre: limpiarTexto(datosCliente.nombre),
+                cliente_telefono: limpiarTexto(datosCliente.telefono),
+                cliente_email: limpiarTexto(datosCliente.email),
+                cliente_notas: limpiarTexto(datosCliente.notas) || "Sin notas",
+                servicio_nombre: limpiarTexto(datosCita.servicio),
+                servicio_duracion: limpiarTexto(datosCita.duracion),
+                servicio_precio: limpiarTexto(datosCita.precio),
+                barbero_nombre: limpiarTexto(datosCita.barbero),
+                cita_fecha_hora: limpiarTexto(datosCita.fechaHora),
+                cita_id: datosCita.citaId
+            };
+
+            return Promise.all([
+                emailjs.send(serviceID, templateClienteID, paramsCliente),
+                emailjs.send(serviceID, templateAdminID, paramsAdmin)
+            ])
+            .then(function(responses) {
+                return true;
+            })
+            .catch(function(error) {
+                return false;
+            });
+        }
+
+        // ==========================================
+        // DATOS DE SERVICIOS Y BARBEROS
+        // ==========================================
+        const SERVICIOS = [
+            {
+                id: 'corte-tijera',
+                nombre: 'Corte a tijera estilizado y cabello largo',
+                duracion: '1h 30min',
+                precio: '300 $',
+                imagen: 'assets/logo.jpeg',
+                descripcion: 'Cuando tu corte requiera secciones, sea largo medio, acabado con máquina o reducción de tu corte largo, esta es la opción. Ejemplos cortes Old money, wolfcut, mid part largo, mudcut o coreano.'
+            },
+            {
+                id: 'corte-sencillo',
+                nombre: 'Corte sencillo (corte express)',
+                duracion: '30min',
+                precio: '150 $',
+                imagen: 'assets/logo.jpeg',
+                descripcion: 'Corte en menos de 30 minutos, numero 1 o 2 a los lados con maquina y despunte de la parte de arriba, peinado. NO DESVANECIDO (no fade)'
+            },
+            {
+                id: 'corte-cabello',
+                nombre: 'Corte de cabello / Haircut',
+                duracion: '45min',
+                precio: '250 $',
+                imagen: 'assets/logo.jpeg',
+                descripcion: 'Querido cliente si tienes cabello largo llegando a los hombros o pasando y quieres un corte de cabello largo, o solamente a tijera, selecciona la opción transformación de largo a corto o corte a tijera, por favor recuerda llegar puntual.'
+            },
+            {
+                id: 'barba-ritual',
+                nombre: 'Barba / Beard (Ritual)',
+                duracion: '45 min',
+                precio: '250 $',
+                imagen: 'assets/logo.jpeg',
+                descripcion: 'Delineado, afeitado tradicional, servicio de aceites, toallas frías y calientes, perfilado con navaja, secado de barba, bálsamos y after shave.'
+            },
+            {
+                id: 'transformacion-largo-corto',
+                nombre: 'Transformación de largo a corto',
+                duracion: '1h 15min',
+                precio: '280 $',
+                imagen: 'assets/logo.jpeg',
+                descripcion: 'Cabello largo a mas corto o desvanecido lleva un tiempo mas detallado, este servicio te brinda los minutos necesarios para tu transformación'
+            },
+            {
+                id: 'cabello-largo-barba',
+                nombre: 'Cabello largo + barba',
+                duracion: '1h 30min',
+                precio: '500 $',
+                imagen: 'assets/logo.jpeg',
+                descripcion: 'Corte de cabello largo a corto, corte de cabello largo a medio, corte a tijera + arreglo o ritual de barba.'
+            }
+        ];
+
+        const BARBEROS = [
+            { id: 'cualquiera', nombre: 'Cualquiera disponible', subtitulo: 'El primero con disponibilidad', avatar: 'assets/logo.jpeg' },
+            { id: 'alex', nombre: 'Alex "King" López', subtitulo: 'Especialista en Fades Modernos', avatar: 'assets/logo.jpeg' },
+            { id: 'carlos', nombre: 'Carlos Martínez', subtitulo: 'Maestro Navajero', avatar: 'assets/logo.jpeg' }
+        ];
+
+        // ==========================================
+        // ESTADO DE LA RESERVA
+        // ==========================================
+        let estado = {
+            servicio: null,
+            barbero: null,
+            servicioFijo: false,
+            barberoFijo: false,
+            pasoActual: 1,
+            totalPasos: 4,
+            pasoInicial: 'paso-servicio',
+            pasosConfig: {
+                'paso-servicio': { numero: 1, id: 'paso-servicio', siguiente: 'paso-barbero', anterior: null },
+                'paso-barbero': { numero: 2, id: 'paso-barbero', siguiente: 'paso-calendario', anterior: 'paso-servicio' },
+                'paso-calendario': { numero: 3, id: 'paso-calendario', siguiente: 'paso-datos', anterior: 'paso-barbero' },
+                'paso-datos': { numero: 4, id: 'paso-datos', siguiente: null, anterior: 'paso-calendario' }
+            },
+            ordenPasos: []
+        };
+
+        let fechaSeleccionada = null;
+        let horaSeleccionada = null;
+        let mesActual = new Date().getMonth();
+        let anioActual = new Date().getFullYear();
+        let calendarioCargando = false;
+
+        // ==========================================
+        // REFERENCIAS DOM
+        // ==========================================
+        const contenedorServicios = document.getElementById('listaServiciosReserva');
+        const contenedorBarberos = document.getElementById('listaBarberosReserva');
+        const btnRegresarSimple = document.getElementById('btnRegresarSimple');
+
+        const resumenVacioDesktop = document.getElementById('resumenVacioDesktop');
+        const resumenContenidoDesktop = document.getElementById('resumenContenidoDesktop');
+        const resumenServicioDesktop = document.getElementById('resumenServicioDesktop');
+        const resumenDuracionDesktop = document.getElementById('resumenDuracionDesktop');
+        const resumenPrecioDesktop = document.getElementById('resumenPrecioDesktop');
+        const resumenBarberoDesktop = document.getElementById('resumenBarberoDesktop');
+        const resumenFechaHoraDesktop = document.getElementById('resumenFechaHoraDesktop');
+        const totalPagarPrecio = document.getElementById('totalPagarPrecio');
+        const totalPagarWrapper = document.getElementById('totalPagarWrapper');
+
+        const mobileToggle = document.getElementById('mobileResumenToggle');
+        const mobileContenido = document.getElementById('mobileResumenContenido');
+        const mobileFlecha = document.getElementById('mobileToggleFlecha');
+        const mobilePrecio = document.getElementById('mobileTogglePrecio');
+        const mobilePreview = document.getElementById('mobileTogglePreview');
+        const mobilePreviewTexto = document.getElementById('mobilePreviewTexto');
+        const mobileVacio = document.getElementById('mobileResumenVacio');
+        const mobileDatos = document.getElementById('mobileResumenDatos');
+        const mobileServicio = document.getElementById('mobileResumenServicio');
+        const mobileDuracion = document.getElementById('mobileResumenDuracion');
+        const mobilePrecioResumen = document.getElementById('mobileResumenPrecio');
+        const mobileBarbero = document.getElementById('mobileResumenBarbero');
+        const mobileFechaHora = document.getElementById('mobileResumenFechaHora');
+        const mobileTotal = document.getElementById('mobileResumenTotal');
+
+        const pasosMap = {
+            'paso-servicio': { 
+                elementos: [document.getElementById('paso-servicio')],
+                btnSiguiente: document.getElementById('btnSiguienteServicio'),
+                btnAtras: document.getElementById('btnAtrasServicio'),
+                id: 'paso-servicio'
+            },
+            'paso-barbero': {
+                elementos: [document.getElementById('paso-barbero')],
+                btnSiguiente: document.getElementById('btnSiguienteBarbero'),
+                btnAtras: document.getElementById('btnAtrasBarbero'),
+                id: 'paso-barbero'
+            },
+            'paso-calendario': {
+                elementos: [document.getElementById('paso-calendario')],
+                btnSiguiente: document.getElementById('btnSiguienteCalendario'),
+                btnAtras: document.getElementById('btnAtrasCalendario'),
+                id: 'paso-calendario'
+            },
+            'paso-datos': {
+                elementos: [document.getElementById('paso-datos')],
+                btnSiguiente: document.getElementById('btnSiguienteDatos'),
+                btnAtras: document.getElementById('btnAtrasDatos'),
+                id: 'paso-datos'
+            }
+        };
+
+        const contextos = {
+            'paso-servicio': document.getElementById('contextoServicio'),
+            'paso-barbero': document.getElementById('contextoBarbero'),
+            'paso-calendario': document.getElementById('contextoCalendario'),
+            'paso-datos': document.getElementById('contextoDatos')
+        };
+
+        const fabSiguiente = document.getElementById('fabSiguiente');
+        const fabAtras = document.getElementById('fabAtras');
+
+        // ==========================================
+        // TOGGLE MÓVIL
+        // ==========================================
+        let mobileAbierto = false;
+        let animacionBotones = null;
+        let timeoutResize = null;
+
+        function ajustarBotonesFlotantesOptimizado() {
+            const botonesFlotantes = document.querySelector('.botones-flotantes-wrapper');
+            if (!botonesFlotantes) return;
+            
+            if (animacionBotones) {
+                cancelAnimationFrame(animacionBotones);
+                animacionBotones = null;
+            }
+            
+            animacionBotones = requestAnimationFrame(() => {
+                const alturaToggle = mobileToggle.offsetHeight || 56;
+                const alturaContenido = mobileAbierto ? mobileContenido.scrollHeight : 0;
+                const alturaTotalBarra = alturaToggle + alturaContenido;
+                const ESPACIO_CONSTANTE = 12;
+                
+                botonesFlotantes.style.bottom = (alturaTotalBarra + ESPACIO_CONSTANTE) + 'px';
+                animacionBotones = null;
+            });
+        }
+
+        mobileToggle.addEventListener('click', function() {
+            mobileAbierto = !mobileAbierto;
+            
+            if (mobileAbierto) {
+                mobileContenido.classList.add('abierto');
+                mobileFlecha.classList.add('abierto');
+                mobilePreview.classList.add('oculto');
+                document.body.classList.add('mobile-resumen-active');
+            } else {
+                mobileContenido.classList.remove('abierto');
+                mobileFlecha.classList.remove('abierto');
+                mobilePreview.classList.remove('oculto');
+                document.body.classList.remove('mobile-resumen-active');
+            }
+            
+            ajustarBotonesFlotantesOptimizado();
+            
+            mobileContenido.addEventListener('transitionend', function handler() {
+                ajustarBotonesFlotantesOptimizado();
+                mobileContenido.removeEventListener('transitionend', handler);
+            }, { once: true });
+        });
+
+        window.addEventListener('resize', function() {
+            if (timeoutResize) {
+                cancelAnimationFrame(timeoutResize);
+                timeoutResize = null;
+            }
+            timeoutResize = requestAnimationFrame(() => {
+                ajustarBotonesFlotantesOptimizado();
+                timeoutResize = null;
+            });
+        });
+
+        window.addEventListener('load', function() {
+            ajustarBotonesFlotantesOptimizado();
+            setTimeout(ajustarBotonesFlotantesOptimizado, 50);
+        });
+
+        // ==========================================
+        // ACTUALIZAR TOTAL Y RESUMEN
+        // ==========================================
+        function actualizarTotalPagar() {
+            if (totalPagarPrecio && totalPagarWrapper) {
+                totalPagarWrapper.style.display = 'flex';
+                if (estado.servicio) {
+                    const numero = estado.servicio.precio.replace(/[^0-9]/g, '');
+                    totalPagarPrecio.innerHTML = `$${numero} <span>MXN</span>`;
+                } else {
+                    totalPagarPrecio.innerHTML = `$0 <span>MXN</span>`;
+                }
+            }
+
+            if (mobilePrecio) {
+                if (estado.servicio) {
+                    const numero = estado.servicio.precio.replace(/[^0-9]/g, '');
+                    mobilePrecio.innerHTML = `$${numero} <span>MXN</span>`;
+                } else {
+                    mobilePrecio.innerHTML = `$0 <span>MXN</span>`;
+                }
+            }
+
+            if (mobileTotal) {
+                if (estado.servicio) {
+                    const numero = estado.servicio.precio.replace(/[^0-9]/g, '');
+                    mobileTotal.innerHTML = `$${numero} <span>MXN</span>`;
+                } else {
+                    mobileTotal.innerHTML = `$0 <span>MXN</span>`;
+                }
+            }
+        }
+
+        function formatearFechaHora(fecha, hora) {
+            if (!fecha) return '—';
+            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const diaSemana = diasSemana[fecha.getDay()];
+            const dia = fecha.getDate();
+            const mes = meses[fecha.getMonth()];
+            const anio = fecha.getFullYear();
+            if (hora) {
+                return `${diaSemana}, ${dia} de ${mes} ${anio} · ${hora}`;
+            }
+            return `${diaSemana}, ${dia} de ${mes} ${anio}`;
+        }
+
+        function actualizarPreview() {
+            const tieneServicio = estado.servicio !== null;
+            const tieneBarbero = estado.barbero !== null;
+            const tieneFecha = fechaSeleccionada !== null;
+            const tieneHora = horaSeleccionada !== null;
+
+            if (tieneServicio) {
+                let texto = estado.servicio.nombre;
+                if (estado.servicio.duracion) {
+                    texto += ` · ${estado.servicio.duracion}`;
+                }
+                if (tieneBarbero) {
+                    texto += ` · ${estado.barbero.nombre}`;
+                }
+                if (tieneFecha && tieneHora) {
+                    texto += ` · ${formatearFechaHora(fechaSeleccionada, horaSeleccionada)}`;
+                } else if (tieneFecha) {
+                    texto += ` · ${formatearFechaHora(fechaSeleccionada, null)}`;
+                }
+                mobilePreviewTexto.textContent = texto;
+            } else {
+                mobilePreviewTexto.textContent = 'Selecciona un servicio para comenzar';
+            }
+        }
+
+        function actualizarResumen() {
+            const tieneServicio = estado.servicio !== null;
+            const tieneBarbero = estado.barbero !== null;
+            const tieneFecha = fechaSeleccionada !== null;
+            const tieneHora = horaSeleccionada !== null;
+            
+            if (tieneServicio) {
+                resumenVacioDesktop.style.display = 'none';
+                resumenContenidoDesktop.style.display = 'block';
+                resumenServicioDesktop.textContent = estado.servicio.nombre;
+                resumenDuracionDesktop.textContent = estado.servicio.duracion;
+                resumenPrecioDesktop.textContent = estado.servicio.precio;
+                resumenBarberoDesktop.textContent = tieneBarbero ? estado.barbero.nombre : '—';
+                if (tieneFecha && tieneHora) {
+                    resumenFechaHoraDesktop.textContent = formatearFechaHora(fechaSeleccionada, horaSeleccionada);
+                } else if (tieneFecha) {
+                    resumenFechaHoraDesktop.textContent = formatearFechaHora(fechaSeleccionada, null);
+                } else {
+                    resumenFechaHoraDesktop.textContent = '—';
+                }
+            } else {
+                resumenVacioDesktop.style.display = 'block';
+                resumenContenidoDesktop.style.display = 'none';
+            }
+
+            if (tieneServicio) {
+                mobileVacio.style.display = 'none';
+                mobileDatos.style.display = 'block';
+                mobileServicio.textContent = estado.servicio.nombre;
+                mobileDuracion.textContent = estado.servicio.duracion;
+                mobilePrecioResumen.textContent = estado.servicio.precio;
+                mobileBarbero.textContent = tieneBarbero ? estado.barbero.nombre : '—';
+                if (tieneFecha && tieneHora) {
+                    mobileFechaHora.textContent = formatearFechaHora(fechaSeleccionada, horaSeleccionada);
+                } else if (tieneFecha) {
+                    mobileFechaHora.textContent = formatearFechaHora(fechaSeleccionada, null);
+                } else {
+                    mobileFechaHora.textContent = '—';
+                }
+            } else {
+                mobileVacio.style.display = 'block';
+                mobileDatos.style.display = 'none';
+            }
+
+            actualizarPreview();
+            actualizarTotalPagar();
+        }
+
+        // ==========================================
+        // RENDERIZAR SERVICIOS Y BARBEROS
+        // ==========================================
+        function renderizarServicios() {
+            if (!contenedorServicios) return;
+            contenedorServicios.innerHTML = '';
+            SERVICIOS.forEach((s, index) => {
+                const div = document.createElement('div');
+                div.className = 'tarjeta-servicio-linea';
+                div.dataset.id = s.id;
+                div.innerHTML = `
+                    <img src="${s.imagen}" alt="${s.nombre}" class="servicio-mini-img" loading="lazy">
+                    <div class="servicio-contenido">
+                        <h3>${s.nombre}</h3>
+                        <div class="servicio-meta-fila">
+                            <span class="duracion-texto">${s.duracion}</span>
+                            <span class="separador">•</span>
+                            <span class="detalles-toggle" data-servicio="detalle-reserva-${index}">Ver detalles</span>
+                            <span class="separador">•</span>
+                            <span class="precio-texto">${s.precio}</span>
+                        </div>
+                        <div class="detalles-contenido" id="detalle-reserva-${index}">
+                            <p>${s.descripcion}</p>
+                        </div>
+                    </div>
+                `;
+                div.addEventListener('click', function(e) {
+                    if (e.target.closest('.detalles-toggle')) return;
+                    seleccionarServicio(s);
+                });
+                contenedorServicios.appendChild(div);
+            });
+
+            document.querySelectorAll('#listaServiciosReserva .detalles-toggle').forEach(function(element) {
+                element.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var detalleId = this.getAttribute('data-servicio');
+                    var contenido = document.getElementById(detalleId);
+                    if (contenido) {
+                        contenido.classList.toggle('abierto');
+                        this.textContent = contenido.classList.contains('abierto') ? 'Ocultar detalles' : 'Ver detalles';
+                    }
+                });
+            });
+        }
+
+        function renderizarBarberos() {
+            if (!contenedorBarberos) return;
+            contenedorBarberos.innerHTML = '';
+            BARBEROS.forEach(b => {
+                const div = document.createElement('div');
+                div.className = 'opcion-barbero';
+                div.dataset.id = b.id;
+                div.innerHTML = `
+                    <img src="${b.avatar}" alt="${b.nombre}" loading="lazy">
+                    <div class="info">
+                        <span class="nombre">${b.nombre}</span>
+                        <span class="subtitulo">${b.subtitulo}</span>
+                    </div>
+                `;
+                div.addEventListener('click', () => seleccionarBarbero(b));
+                contenedorBarberos.appendChild(div);
+            });
+        }
+
+        // ==========================================
+        // SELECCIONAR SERVICIO Y BARBERO
+        // ==========================================
+        function seleccionarServicio(servicio) {
+            estado.servicio = servicio;
+            actualizarUI('paso-servicio');
+            actualizarContextos();
+            actualizarResumen();
+            actualizarFabSiguiente();
+            
+            const btn = pasosMap['paso-servicio'].btnSiguiente;
+            if (btn) btn.disabled = false;
+        }
+
+        function seleccionarBarbero(barbero) {
+            estado.barbero = barbero;
+            actualizarUI('paso-barbero');
+            actualizarContextos();
+            actualizarResumen();
+            actualizarFabSiguiente();
+            
+            const btn = pasosMap['paso-barbero'].btnSiguiente;
+            if (btn) btn.disabled = false;
+        }
+
+        // ==========================================
+        // ACTUALIZAR UI Y CONTEXTOS
+        // ==========================================
+        function actualizarUI(pasoId) {
+            if (pasoId === 'paso-servicio' || !pasoId) {
+                const itemsServicio = contenedorServicios?.querySelectorAll('.tarjeta-servicio-linea') || [];
+                itemsServicio.forEach(el => {
+                    const id = el.dataset.id;
+                    el.classList.toggle('seleccionado', estado.servicio && estado.servicio.id === id);
+                });
+            }
+            if (pasoId === 'paso-barbero' || !pasoId) {
+                const itemsBarbero = contenedorBarberos?.querySelectorAll('.opcion-barbero') || [];
+                itemsBarbero.forEach(el => {
+                    const id = el.dataset.id;
+                    el.classList.toggle('seleccionado', estado.barbero && estado.barbero.id === id);
+                });
+            }
+        }
+
+        function actualizarContextos() {
+            Object.values(contextos).forEach(ctx => {
+                if (ctx) ctx.innerHTML = '';
+            });
+        }
+
+        // ==========================================
+        // SCROLL AL INICIO DEL PASO
+        // ==========================================
+        function scrollAlInicio() {
+            const pasoVisible = document.querySelector('.paso-contenido[style*="display: block"]');
+            
+            if (pasoVisible) {
+                const rect = pasoVisible.getBoundingClientRect();
+                const headerHeight = document.querySelector('.reserva-header-superior')?.offsetHeight || 0;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const targetPosition = rect.top + scrollTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // ==========================================
+        // BOTONES FLOTANTES
+        // ==========================================
+        function obtenerPasoActualId() {
+            const pasosIds = ['paso-servicio', 'paso-barbero', 'paso-calendario', 'paso-datos'];
+            for (let id of pasosIds) {
+                const elemento = document.getElementById(id);
+                if (elemento && elemento.style.display !== 'none') {
+                    return id;
+                }
+            }
+            return null;
+        }
+
+        function actualizarFabSiguiente() {
+            if (!fabSiguiente) return;
+            
+            const pasoId = obtenerPasoActualId();
+            if (!pasoId) return;
+            
+            let habilitado = false;
+            let textoBoton = 'Siguiente';
+            
+            if (pasoId === 'paso-servicio') {
+                habilitado = estado.servicio !== null;
+                textoBoton = habilitado ? 'Siguiente' : 'Selecciona un servicio';
+            } else if (pasoId === 'paso-barbero') {
+                habilitado = estado.barbero !== null;
+                textoBoton = habilitado ? 'Siguiente' : 'Selecciona un barbero';
+            } else if (pasoId === 'paso-calendario') {
+                habilitado = fechaSeleccionada !== null && horaSeleccionada !== null;
+                textoBoton = habilitado ? 'Siguiente' : 'Selecciona fecha y hora';
+            } else if (pasoId === 'paso-datos') {
+                const nombre = document.getElementById('cliente-nombre')?.value.trim();
+                const email = document.getElementById('cliente-email')?.value.trim();
+                const telefono = document.getElementById('cliente-telefono')?.value.trim();
+                const emailValido = email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                habilitado = nombre && telefono && emailValido && nombre.length > 0 && telefono.length > 0;
+                textoBoton = habilitado ? 'Agendar cita' : 'Completa tus datos';
+            }
+            
+            if (habilitado) {
+                fabSiguiente.classList.add('activo');
+                fabSiguiente.disabled = false;
+                fabSiguiente.textContent = textoBoton;
+            } else {
+                fabSiguiente.classList.remove('activo');
+                fabSiguiente.disabled = true;
+                fabSiguiente.textContent = textoBoton;
+            }
+        }
+
+        function actualizarFabAtras() {
+            if (!fabAtras) return;
+            
+            const pasoId = obtenerPasoActualId();
+            if (!pasoId) return;
+            
+            const pasoData = Object.values(estado.pasosConfig).find(p => p.id === pasoId);
+            
+            fabAtras.style.display = 'inline-flex';
+            fabAtras.disabled = false;
+            
+            if (pasoData && !pasoData.anterior) {
+                fabAtras.textContent = 'Volver';
+                fabAtras.onclick = function() {
+                    window.location.href = 'index.html';
+                };
+            } else {
+                fabAtras.textContent = 'Volver';
+                fabAtras.onclick = function() {
+                    const pasoIdActual = obtenerPasoActualId();
+                    if (pasoIdActual) {
+                        const paso = pasosMap[pasoIdActual];
+                        if (paso && paso.btnAtras) {
+                            paso.btnAtras.click();
+                        }
+                    }
+                };
+            }
+        }
+
+        // ==========================================
+        // NAVEGACIÓN DE PASOS
+        // ==========================================
+        function irAPaso(pasoId) {
+            document.querySelectorAll('.paso-contenido').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            const paso = pasosMap[pasoId];
+            if (paso && paso.elementos && paso.elementos.length > 0) {
+                const elemento = paso.elementos[0];
+                elemento.style.display = 'block';
+                
+                if (pasoId === 'paso-calendario') {
+                    if (fabSiguiente) {
+                        fabSiguiente.disabled = true;
+                        fabSiguiente.textContent = 'Cargando...';
+                    }
+                    
+                    requestAnimationFrame(() => {
+                        setTimeout(() => {
+                            renderizarCalendario();
+                        }, 10);
+                    });
+                } else {
+                    if (pasoId === 'paso-servicio' || pasoId === 'paso-barbero') {
+                        actualizarUI(pasoId);
+                    }
+                    actualizarFabSiguiente();
+                    actualizarFabAtras();
+                }
+            }
+
+            const pasoData = Object.values(estado.pasosConfig).find(p => p.id === pasoId);
+            if (pasoData) {
+                estado.pasoActual = pasoData.numero;
+            }
+
+            const pasoActualData = Object.values(estado.pasosConfig).find(p => p.id === pasoId);
+            if (pasoActualData) {
+                const btnAtras = paso.btnAtras;
+                if (btnAtras) {
+                    btnAtras.style.visibility = pasoActualData.anterior ? 'visible' : 'hidden';
+                }
+            }
+
+            actualizarContextos();
+            
+            if (pasoId !== 'paso-calendario') {
+                requestAnimationFrame(() => {
+                    scrollAlInicio();
+                });
+            }
+        }
+
+        function avanzarPaso(pasoId) {
+            const pasoData = Object.values(estado.pasosConfig).find(p => p.id === pasoId);
+            if (pasoData && pasoData.siguiente) {
+                irAPaso(pasoData.siguiente);
+            }
+        }
+
+        function retrocederPaso(pasoId) {
+            const pasoData = Object.values(estado.pasosConfig).find(p => p.id === pasoId);
+            if (pasoData && pasoData.anterior) {
+                irAPaso(pasoData.anterior);
+            }
+        }
+
+        // ==========================================
+        // RENDERIZAR CALENDARIO
+        // ==========================================
+        async function renderizarCalendario() {
+            if (calendarioCargando) return;
+            calendarioCargando = true;
+            
+            const cargando = document.getElementById('calendarioCargando');
+            const container = document.getElementById('calendarioContainer');
+            const grid = document.getElementById('calGrid');
+            const titulo = document.getElementById('calMesTitulo');
+            const sinSeleccion = document.getElementById('calSinSeleccion');
+            const horasSection = document.getElementById('calHorasSection');
+            
+            cargando.style.display = 'block';
+            container.style.opacity = '0.5';
+            
+            const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            titulo.textContent = `${meses[mesActual]} ${anioActual}`;
+            
+            await obtenerDisponibilidadMes(anioActual, mesActual);
+            
+            const primerDia = new Date(anioActual, mesActual, 1);
+            const ultimoDia = new Date(anioActual, mesActual + 1, 0);
+            const diasEnMes = ultimoDia.getDate();
+            const diaInicioSemana = primerDia.getDay();
+            
+            let offset = diaInicioSemana === 0 ? 6 : diaInicioSemana - 1;
+            
+            grid.innerHTML = '';
+            
+            const hoy = new Date();
+            const hoyNum = hoy.getDate();
+            const hoyMes = hoy.getMonth();
+            const hoyAnio = hoy.getFullYear();
+            
+            const diasMesAnterior = new Date(anioActual, mesActual, 0).getDate();
+            for (let i = offset - 1; i >= 0; i--) {
+                const dia = document.createElement('button');
+                dia.className = 'cal-dia cal-dia-vacio cal-dia-otro-mes';
+                dia.textContent = diasMesAnterior - i;
+                dia.disabled = true;
+                grid.appendChild(dia);
+            }
+            
+            for (let i = 1; i <= diasEnMes; i++) {
+                const dia = document.createElement('button');
+                dia.className = 'cal-dia';
+                dia.textContent = i;
+                
+                const fecha = new Date(anioActual, mesActual, i);
+                const esHoy = i === hoyNum && mesActual === hoyMes && anioActual === hoyAnio;
+                const esPasado = fecha < new Date(hoyAnio, hoyMes, hoyNum);
+                
+                let tieneDisponibilidad = false;
+                if (!esPasado) {
+                    tieneDisponibilidad = await diaTieneDisponibilidad(fecha);
+                }
+                
+                if (esHoy) dia.classList.add('cal-dia-hoy');
+                
+                const estaSeleccionado = fechaSeleccionada && 
+                    fechaSeleccionada.getDate() === i &&
+                    fechaSeleccionada.getMonth() === mesActual &&
+                    fechaSeleccionada.getFullYear() === anioActual;
+                
+                if (estaSeleccionado) {
+                    dia.classList.add('cal-dia-seleccionado');
+                }
+                
+                if (esPasado || !tieneDisponibilidad) {
+                    dia.classList.add('cal-dia-deshabilitado');
+                    dia.disabled = true;
+                } else {
+                    dia.classList.add('cal-dia-disponible');
+                }
+                
+                dia.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    const diaNum = parseInt(this.textContent);
+                    const fecha = new Date(anioActual, mesActual, diaNum);
+                    seleccionarFecha(fecha);
+                });
+                
+                grid.appendChild(dia);
+            }
+            
+            const totalDias = offset + diasEnMes;
+            const sobrantes = totalDias % 7 === 0 ? 0 : 7 - (totalDias % 7);
+            for (let i = 1; i <= sobrantes; i++) {
+                const dia = document.createElement('button');
+                dia.className = 'cal-dia cal-dia-vacio cal-dia-otro-mes';
+                dia.textContent = i;
+                dia.disabled = true;
+                grid.appendChild(dia);
+            }
+            
+            cargando.style.display = 'none';
+            container.style.opacity = '1';
+            calendarioCargando = false;
+            
+            if (fechaSeleccionada && horaSeleccionada) {
+                fabSiguiente.disabled = false;
+                fabSiguiente.textContent = 'Siguiente';
+                fabSiguiente.classList.add('activo');
+            } else {
+                actualizarFabSiguiente();
+            }
+            
+            if (fechaSeleccionada) {
+                const sigueDisponible = await diaTieneDisponibilidad(fechaSeleccionada);
+                if (!sigueDisponible) {
+                    fechaSeleccionada = null;
+                    horaSeleccionada = null;
+                    sinSeleccion.style.display = 'block';
+                    horasSection.style.display = 'none';
+                    actualizarResumen();
+                    actualizarFabSiguiente();
+                    return;
+                }
+                
+                sinSeleccion.style.display = 'none';
+                horasSection.style.display = 'block';
+                actualizarFechaSeleccionada();
+                await renderizarHoras(fechaSeleccionada);
+            } else {
+                sinSeleccion.style.display = 'block';
+                horasSection.style.display = 'none';
+            }
+        }
+
+        async function renderizarHoras(fecha) {
+            const grid = document.getElementById('calHorasGrid');
+            grid.innerHTML = '';
+            
+            const ocupadas = await obtenerHorasOcupadas(fecha);
+            
+            TODAS_LAS_HORAS.forEach(hora => {
+                const btn = document.createElement('button');
+                btn.className = 'cal-hora';
+                btn.textContent = hora;
+                
+                const estaOcupada = ocupadas.includes(hora);
+                const pasada = esHoraPasada(hora, fecha);
+                
+                if (estaOcupada || pasada) {
+                    btn.classList.add('cal-hora-ocupada');
+                    btn.disabled = true;
+                    if (pasada) {
+                        btn.title = 'Esta hora ya pasó';
+                    } else {
+                        btn.title = 'Hora ocupada';
+                    }
+                }
+                
+                if (horaSeleccionada === hora && !pasada) {
+                    btn.classList.add('cal-hora-seleccionada');
+                }
+                
+                btn.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    seleccionarHora(hora);
+                });
+                grid.appendChild(btn);
+            });
+        }
+
+        // ==========================================
+        // SELECCIONAR FECHA Y HORA
+        // ==========================================
+        async function seleccionarFecha(fecha) {
+            const tieneDisp = await diaTieneDisponibilidad(fecha);
+            if (!tieneDisp) {
+                alert('Esta fecha ya no tiene disponibilidad');
+                return;
+            }
+            
+            document.querySelectorAll('.cal-dia.cal-dia-seleccionado').forEach(el => {
+                el.classList.remove('cal-dia-seleccionado');
+            });
+            
+            fechaSeleccionada = fecha;
+            horaSeleccionada = null;
+            
+            const dias = document.querySelectorAll('.cal-dia');
+            dias.forEach(el => {
+                const diaNum = parseInt(el.textContent);
+                if (!isNaN(diaNum) && 
+                    diaNum === fecha.getDate() && 
+                    mesActual === fecha.getMonth() && 
+                    anioActual === fecha.getFullYear() &&
+                    !el.classList.contains('cal-dia-vacio') &&
+                    !el.classList.contains('cal-dia-otro-mes')) {
+                    el.classList.add('cal-dia-seleccionado');
+                }
+            });
+            
+            const sinSeleccion = document.getElementById('calSinSeleccion');
+            const horasSection = document.getElementById('calHorasSection');
+            sinSeleccion.style.display = 'none';
+            horasSection.style.display = 'block';
+            actualizarFechaSeleccionada();
+            await renderizarHoras(fecha);
+            
+            actualizarResumen();
+            actualizarFabSiguiente();
+        }
+
+        async function seleccionarHora(hora) {
+            const ocupada = await horaEstaOcupada(fechaSeleccionada, hora);
+            if (ocupada) {
+                alert('Esta hora ya no está disponible');
+                await renderizarHoras(fechaSeleccionada);
+                return;
+            }
+            
+            horaSeleccionada = hora;
+            await renderizarHoras(fechaSeleccionada);
+            actualizarResumen();
+            actualizarFabSiguiente();
+        }
+
+        function actualizarFechaSeleccionada() {
+            if (!fechaSeleccionada) return;
+            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            document.getElementById('calFechaDia').textContent = fechaSeleccionada.getDate();
+            document.getElementById('calFechaDiaSemana').textContent = diasSemana[fechaSeleccionada.getDay()];
+            document.getElementById('calFechaMes').textContent = meses[fechaSeleccionada.getMonth()];
+        }
+
+        // ==========================================
+        // EVENTOS DEL CALENDARIO
+        // ==========================================
+        document.getElementById('calHoyBtn')?.addEventListener('click', function() {
+            const hoy = new Date();
+            mesActual = hoy.getMonth();
+            anioActual = hoy.getFullYear();
+            renderizarCalendario();
+        });
+
+        document.getElementById('calMesAnterior').addEventListener('click', function() {
+            mesActual--;
+            if (mesActual < 0) { mesActual = 11; anioActual--; }
+            renderizarCalendario();
+        });
+
+        document.getElementById('calMesSiguiente').addEventListener('click', function() {
+            mesActual++;
+            if (mesActual > 11) { mesActual = 0; anioActual++; }
+            renderizarCalendario();
+        });
+
+        // ==========================================
+        // BOTÓN REGRESAR
+        // ==========================================
+        if (btnRegresarSimple) {
+            btnRegresarSimple.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        }
+
+        // ==========================================
+        // AGENDAR CITA
+        // ==========================================
+        async function agendarCita() {
+            const nombre = document.getElementById('cliente-nombre').value.trim();
+            const email = document.getElementById('cliente-email').value.trim();
+            const telefono = document.getElementById('cliente-telefono').value.trim();
+            const notas = document.getElementById('cliente-notas').value.trim();
+            
+            if (!nombre || !email || !telefono) {
+                alert('Completa todos los campos obligatorios.');
+                return;
+            }
+            
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Correo electrónico inválido.');
+                return;
+            }
+            
+            const ocupada = await horaEstaOcupada(fechaSeleccionada, horaSeleccionada);
+            if (ocupada) {
+                alert('Esta hora ya no está disponible. Por favor selecciona otra.');
+                await renderizarHoras(fechaSeleccionada);
+                actualizarFabSiguiente();
+                return;
+            }
+            
+            const datosCliente = { nombre, email, telefono, notas };
+            const datosCita = {
+                servicio: estado.servicio ? estado.servicio.nombre : 'No especificado',
+                duracion: estado.servicio ? estado.servicio.duracion : 'No especificado',
+                precio: estado.servicio ? estado.servicio.precio : 'No especificado',
+                barbero: estado.barbero ? estado.barbero.nombre : 'No especificado',
+                fechaHora: formatearFechaHora(fechaSeleccionada, horaSeleccionada)
+            };
+            
+            const btnAgendar = document.getElementById('btnSiguienteDatos');
+            const textoOriginal = btnAgendar.textContent;
+            btnAgendar.textContent = 'Guardando...';
+            btnAgendar.disabled = true;
+            
+            const guardado = await guardarCita(fechaSeleccionada, horaSeleccionada, datosCliente, datosCita);
+            
+            if (!guardado.success) {
+                alert('Hubo un error al guardar la cita. Por favor, intenta de nuevo.');
+                btnAgendar.textContent = textoOriginal;
+                btnAgendar.disabled = false;
+                return;
+            }
+            
+            datosCita.citaId = guardado.citaId;
+            
+            const enviado = await enviarCorreoConfirmacion(datosCliente, datosCita);
+            
+            if (!enviado) {
+                alert('La cita se guardó correctamente, pero hubo un error al enviar los correos.');
+            }
+            
+            const params = new URLSearchParams({
+                email: email,
+                servicio: datosCita.servicio,
+                duracion: datosCita.duracion,
+                barbero: datosCita.barbero,
+                fechahora: datosCita.fechaHora,
+                precio: datosCita.precio,
+                citaId: guardado.citaId
+            });
+            
+            window.location.href = 'confirmacion.html?' + params.toString();
+        }
+
+        // ==========================================
+        // DETERMINAR ORDEN DE PASOS
+        // ==========================================
+        function determinarOrdenPasos() {
+            const params = new URLSearchParams(window.location.search);
+            const servicioParam = params.get('servicio');
+            const barberoParam = params.get('barbero');
+
+            estado.ordenPasos = ['paso-servicio', 'paso-barbero', 'paso-calendario', 'paso-datos'];
+            estado.totalPasos = estado.ordenPasos.length;
+
+            estado.ordenPasos.forEach((id, index) => {
+                const pasoData = estado.pasosConfig[id];
+                if (pasoData) {
+                    pasoData.numero = index + 1;
+                    pasoData.siguiente = index < estado.ordenPasos.length - 1 ? estado.ordenPasos[index + 1] : null;
+                    pasoData.anterior = index > 0 ? estado.ordenPasos[index - 1] : null;
+                }
+            });
+
+            if (servicioParam) {
+                const buscado = decodeURIComponent(servicioParam).toLowerCase().trim();
+                let encontrado = SERVICIOS.find(s => s.id === buscado);
+                if (!encontrado) {
+                    encontrado = SERVICIOS.find(s => 
+                        s.nombre.toLowerCase().includes(buscado) || 
+                        buscado.includes(s.nombre.toLowerCase())
+                    );
+                }
+                if (encontrado) {
+                    estado.servicio = encontrado;
+                    estado.servicioFijo = true;
+                }
+            }
+
+            if (barberoParam) {
+                const buscado = decodeURIComponent(barberoParam).toLowerCase().trim();
+                let encontrado = BARBEROS.find(b => b.id === buscado);
+                if (!encontrado) {
+                    encontrado = BARBEROS.find(b => 
+                        b.nombre.toLowerCase().includes(buscado) || 
+                        buscado.includes(b.nombre.toLowerCase())
+                    );
+                }
+                if (encontrado) {
+                    estado.barbero = encontrado;
+                    estado.barberoFijo = true;
+                }
+            }
+
+            if (estado.servicioFijo && estado.barberoFijo) {
+                estado.pasoInicial = 'paso-calendario';
+            } else if (estado.servicioFijo) {
+                estado.pasoInicial = 'paso-barbero';
+            } else {
+                estado.pasoInicial = 'paso-servicio';
+            }
+        }
+
+        // ==========================================
+        // INICIALIZAR
+        // ==========================================
+        async function inicializar() {
+            renderizarServicios();
+            renderizarBarberos();
+
+            determinarOrdenPasos();
+
+            const primerPaso = estado.pasoInicial || estado.ordenPasos[0];
+            irAPaso(primerPaso);
+
+            actualizarUI();
+            actualizarContextos();
+            actualizarResumen();
+            actualizarFabAtras();
+
+            Object.keys(pasosMap).forEach(id => {
+                const paso = pasosMap[id];
+                if (paso.btnSiguiente) {
+                    paso.btnSiguiente.addEventListener('click', () => avanzarPaso(id));
+                }
+                if (paso.btnAtras) {
+                    paso.btnAtras.addEventListener('click', () => retrocederPaso(id));
+                }
+            });
+
+            document.addEventListener('input', function(e) {
+                if (e.target.closest('#formDatosCliente')) {
+                    actualizarFabSiguiente();
+                }
+            });
+        }
+
+        // ==========================================
+        // EMAILJS - CONFIGURACIÓN
+        // ==========================================
+        (function() {
+            emailjs.init("Bd9sr1iXw9L45vOWM");
+        })();
+
+        // ==========================================
+        // BOTÓN "AGENDAR CITA"
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnAgendar = document.getElementById('btnSiguienteDatos');
+            if (btnAgendar) {
+                btnAgendar.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    agendarCita();
+                });
+            }
+        });
+
+        // ==========================================
+        // BOTÓN FLOTANTE
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const fabSiguiente = document.getElementById('fabSiguiente');
+            
+            if (fabSiguiente) {
+                fabSiguiente.addEventListener('click', function() {
+                    const pasoId = obtenerPasoActualId();
+                    if (pasoId === 'paso-datos') {
+                        if (this.classList.contains('activo') && this.textContent.includes('Agendar')) {
+                            const btnDatos = document.getElementById('btnSiguienteDatos');
+                            if (btnDatos) {
+                                btnDatos.click();
+                            }
+                        }
+                    } else {
+                        if (pasoId) {
+                            const paso = pasosMap[pasoId];
+                            if (paso && paso.btnSiguiente) {
+                                paso.btnSiguiente.click();
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
+        // ==========================================
+        // EJECUTAR
+        // ==========================================
+        inicializar();
+
+    </script>
+
+</body>
+</html>
